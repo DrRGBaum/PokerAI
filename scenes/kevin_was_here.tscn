@@ -1,3 +1,19 @@
-[gd_scene format=3 uid="uid://mwkit2xcnixu"]
+[gd_scene load_steps=4 format=3 uid="uid://mwkit2xcnixu"]
+
+[ext_resource type="Texture2D" uid="uid://vhcx6tt0224d" path="res://assets/pixelPokerSet.png" id="1_chbb7"]
+[ext_resource type="Texture2D" uid="uid://betb7woi41xc6" path="res://assets/pixelPokerSetEdit.png" id="2_20ooh"]
+[ext_resource type="Texture2D" uid="uid://dh3kh11o0fvlw" path="res://assets/PixelPokerTest.png" id="3_xcr2m"]
 
 [node name="KevinWasHere" type="Node2D"]
+
+[node name="PixelPokerSet" type="Sprite2D" parent="."]
+position = Vector2(278, 120)
+texture = ExtResource("1_chbb7")
+
+[node name="PixelPokerSetEdit-recovered" type="Sprite2D" parent="."]
+position = Vector2(274, 361)
+texture = ExtResource("2_20ooh")
+
+[node name="PixelPokerTest" type="Sprite2D" parent="."]
+position = Vector2(885, 208)
+texture = ExtResource("3_xcr2m")
