@@ -7,7 +7,6 @@ var cardScene = preload(\"res://scenes/card.tscn\")
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var instance = cardScene.instantiate()
-	instance.pos = Rect2(80,0,40,60)
 	add_child(instance)
 	pass # Replace with function body.
 
