@@ -30,7 +30,8 @@ func _process(delta):
 script = SubResource("GDScript_f4ry0")
 
 [node name="PixelPokerTest" type="Sprite2D" parent="."]
-position = Vector2(20, 30)
+position = Vector2(40, 60)
+scale = Vector2(2, 2)
 texture = ExtResource("1_fwrej")
 region_enabled = true
 region_rect = Rect2(0, 0, 40, 60)
