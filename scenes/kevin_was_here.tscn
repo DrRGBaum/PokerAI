@@ -1,14 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://mwkit2xcnixu"]
+[gd_scene load_steps=4 format=3 uid="uid://mwkit2xcnixu"]
+
+[ext_resource type="Texture2D" uid="uid://mtmjw6w52sjf" path="res://assets/pokerTablev0.1.png" id="1_ly8ou"]
+[ext_resource type="Script" path="res://scenes/cardStack.gd" id="2_bowx6"]
 
 [sub_resource type="GDScript" id="GDScript_mi2am"]
 script/source = "extends Node2D
 
-var cardScene = preload(\"res://scenes/card.tscn\")
+# hier läuft die game logic
+# also rundenablauf usw
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var instance = cardScene.instantiate()
-	instance.pos = Rect2(80,0,40,60)
-	add_child(instance)
+	
 	pass # Replace with function body.
 
 
@@ -19,3 +22,11 @@ func _process(delta):
 
 [node name="KevinWasHere" type="Node2D"]
 script = SubResource("GDScript_mi2am")
+
+[node name="PokerTablev0_1" type="Sprite2D" parent="."]
+position = Vector2(480, 270)
+scale = Vector2(2, 2)
+texture = ExtResource("1_ly8ou")
+
+[node name="cardStack" type="Node2D" parent="."]
+script = ExtResource("2_bowx6")
