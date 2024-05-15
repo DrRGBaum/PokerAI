@@ -9,11 +9,13 @@ var cardScene = preload(\"res://scenes/card.tscn\")
 
 var value = \"\" #bsp s_2 für 2 of spades
 
-var region_pos = Rect2(40,0,40,60)
+var region_pos = Rect2(560,0,120,60)
+var cardBack = Rect2(560,0,160,60)
+var isVisible :bool = true
 
+#TODO value handler
 # Called when the node enters the scene tree for the first time.
 func _ready():
-
 	# numb = value.lstrip(\"scdh_\") to check the number of the card
 	# print(value)
 	

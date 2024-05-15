@@ -1,12 +1,14 @@
 extends Node2D
 
 # var stack = array of cards in random order
-# var positions = array cards pos left to right
+# var tableCards = array cards pos left to right
 # shuffel() function to randomize the order of the cards
 
 var cardScene = preload("res://scenes/card.tscn")
 
 var stack = []
+
+var tableCards = [Vector2(300,200),Vector2(390,200),Vector2(480,200),Vector2(570,200),Vector2(660,200)]
 
 func shuffelCards(): # mischt die karten
 	randomize()
@@ -27,7 +29,7 @@ func _ready(): # erstellt einen kartenstapel mit den kartenobjekten
 		for j in range(13):
 			var instance = cardScene.instantiate()
 			instance.region_pos = Rect2(40*j,60*i,40,60)
-			instance.set_position(Vector2(90 * j + 40,130*i + 60))
+			instance.set_position(tableCards[4])
 			stack.append(instance)
 			add_child(instance)
 	pass 
