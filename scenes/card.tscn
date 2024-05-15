@@ -7,16 +7,17 @@ script/source = "extends Node2D
 
 var cardScene = preload(\"res://scenes/card.tscn\")
 
-var value = \"s_2\" #for 2 of spades
+var value = \"\" #bsp s_2 für 2 of spades
 
-var pos = Rect2(40,0,40,60)
+var region_pos = Rect2(40,0,40,60)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	value = value.lstrip(\"scdh_\")
-	print(value)
+
+	# numb = value.lstrip(\"scdh_\") to check the number of the card
+	# print(value)
 	
-	$PixelPokerTest.region_rect = pos
+	$PixelPokerTest.region_rect = region_pos
 	queue_redraw()
 	pass # Replace with function body.
 
