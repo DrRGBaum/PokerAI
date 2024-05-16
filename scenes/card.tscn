@@ -7,7 +7,8 @@ script/source = "extends Node2D
 
 var cardScene = preload(\"res://scenes/card.tscn\")
 
-var value = \"\" #bsp s_2 für 2 of spades
+var color = '' #bsp s für spades
+var number :int
 
 var region_pos = Rect2(560,0,120,60)
 var cardBack = Rect2(560,0,160,60)

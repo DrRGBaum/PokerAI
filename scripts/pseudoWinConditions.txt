@@ -1,0 +1,59 @@
+How to name the cards in the code?
+clubs (♣), diamonds (♦), hearts (♥), and spades (♠)
+0 till 10 is ace,2-10 and jack, queen, king, ace 10-13
+before that c, d, h, or s
+so together s_2 would be 2 of spades or c_0 ace of clubs
+//TODO sort() algorythmus der die kartenscenen anhand des wertes sortiert
+
+pseudocode zum kontrollieren dre gewinnmöglichkeiten:
+
+karten = aktuelleHand + tischkarten
+gewinnkarten = // karten der gewinnkombination
+gewinnkombination = "high card"
+
+funktion highCard(pkarten) // gibt die highcard zurück
+	pkarten.sortieren // sortieren nach dem höchsten wert
+	gewinnkarten = pkarten[pkarten.länge -1 ]
+
+funktion onePair(pkarten) // sucht nach 2er paar und gibt dieses zurück
+	n = pkarten.länge
+	für i von 0 bis n-2
+		für j von i + 1 bis n-1
+			wenn pkarten[i] == pkarten[j]
+				gewinnkombination = "one pair"
+				gewinnkarten = pkarten[i,j]
+	ende wenn, für j, für i
+
+funktion twoPair(pkarten, loop) // sucht nach zwei 2er paar und gibt dieses zurück
+	n = pkarten.länge
+	für i von 0 bis n-2
+		für j von i + 1 bis n-1
+			wenn pkarten[i] == pkarten[j] &&  loop
+				gewinnkombination = "two pair" 
+				gewinnkarten.fügeHinzu(pkarten[i,j])
+			sonst wenn pkarten[i] == pkarten[j]
+				gewinnkarten.fügeHinzu(pkarten[i,j])
+				pkarten.entferne(i,j)
+				twoPair(pkarten, true)
+
+funktion threeOfAKind(pkarten)
+	n = pkarten.länge
+	für i von 0 bis n-3
+		für j von i + 1 bis n-2
+			für k von j + 1 bis n-1
+				wenn pkarten[i] == pkarten[j] && pkarten[i] == pkarten[k]
+					gewinnkombination = "three of a kind"
+					gewinnkarten = pkarten[i,j,k]
+
+funktion straight(pkarten)
+	n = pkarten.länge
+	pkarten.sortieren()
+	für i von 0 bis n - 2
+		wenn pkarten[i] + 1 == pkarten[i + 1]
+			count++
+			wenn count == 4
+				gewinnkombination = "straight"
+				gewinnkarten = pkarten[i-3, i-2, i-1, i, i+2]
+
+funktion flush(pkarten)
+	

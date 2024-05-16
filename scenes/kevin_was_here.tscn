@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://mwkit2xcnixu"]
 
 [ext_resource type="Texture2D" uid="uid://mtmjw6w52sjf" path="res://assets/pokerTablev0.1.png" id="1_ly8ou"]
-[ext_resource type="Script" path="res://scenes/cardStack.gd" id="2_bowx6"]
+[ext_resource type="Script" path="res://scripts/cardStack.gd" id="2_bowx6"]
 
 [sub_resource type="GDScript" id="GDScript_mi2am"]
 script/source = "extends Node2D
