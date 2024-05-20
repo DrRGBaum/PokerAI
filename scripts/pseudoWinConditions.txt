@@ -55,5 +55,5 @@ funktion straight(pkarten)
 				gewinnkombination = "straight"
 				gewinnkarten = pkarten[i-3, i-2, i-1, i, i+2]
 
-funktion flush(pkarten)
+funktion flush(pkarten) // TODO
 	
