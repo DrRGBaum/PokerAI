@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bqr3g7wabbl5k"
-path="res://.godot/imported/pixelPokerSetEdit.png-96db078af6b0e59ccfe48683376df7cc.ctex"
+uid="uid://citrhexvms2yc"
+path="res://.godot/imported/PixelCards.png-406f0bf54adbe869099cdb7463275007.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/pixelPokerSetEdit.png"
-dest_files=["res://.godot/imported/pixelPokerSetEdit.png-96db078af6b0e59ccfe48683376df7cc.ctex"]
+source_file="res://assets/PixelCards.png"
+dest_files=["res://.godot/imported/PixelCards.png-406f0bf54adbe869099cdb7463275007.ctex"]
 
 [params]
 
