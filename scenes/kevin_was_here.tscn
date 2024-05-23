@@ -15,13 +15,10 @@ var playerHand = []
 func _ready():
 	var cardStack = $cardStack
 	# cardStack.shuffelCards()
-	cardStack.display()
-	
+	# cardStack.display()
+	cardStack.deal()
 	pass # Replace with function body.
 
-func austeilen():
-	
-	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -39,3 +36,12 @@ script = ExtResource("2_bowx6")
 position = Vector2(480, 270)
 scale = Vector2(2, 2)
 texture = ExtResource("1_bf4rc")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 968.0
+offset_top = 110.0
+offset_right = 1115.0
+offset_bottom = 144.0
+text = "Visible test"
+
+[connection signal="pressed" from="Button" to="cardStack" method="_on_button_pressed"]
