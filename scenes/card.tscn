@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://okvdo5etcrma"]
 
-[ext_resource type="Texture2D" uid="uid://bsustki1y5k7" path="res://assets/PixelCardsDark.png" id="1_jevle"]
+[ext_resource type="Texture2D" uid="uid://citrhexvms2yc" path="res://assets/PixelCards.png" id="1_3jy3d"]
 
 [sub_resource type="GDScript" id="GDScript_f4ry0"]
 script/source = "extends Node2D
@@ -45,6 +45,6 @@ script = SubResource("GDScript_f4ry0")
 
 [node name="PixelPokerTest" type="Sprite2D" parent="."]
 scale = Vector2(2, 2)
-texture = ExtResource("1_jevle")
+texture = ExtResource("1_3jy3d")
 region_enabled = true
 region_rect = Rect2(0, 0, 40, 60)
