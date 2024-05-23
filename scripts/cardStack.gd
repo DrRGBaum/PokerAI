@@ -7,8 +7,14 @@ extends Node2D
 var cardScene = preload("res://scenes/card.tscn")
 
 var stack = []
+var playerHand = []
 
 var tableCards = [Vector2(300,200),Vector2(390,200),Vector2(480,200),Vector2(570,200),Vector2(660,200)]
+var hand = [Vector2(621,470),Vector2(706,470)]
+
+func deal(): #karten austeilen
+	playerHand = [stack[0], stack[1]]
+	pass
 
 func shuffelCards(): # mischt die karten
 	randomize()

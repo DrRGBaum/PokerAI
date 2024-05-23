@@ -9,6 +9,8 @@ script/source = "extends Node2D
 # hier läuft die game logic
 # also rundenablauf usw
 
+var playerHand = []
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var cardStack = $cardStack
@@ -17,6 +19,9 @@ func _ready():
 	
 	pass # Replace with function body.
 
+func austeilen():
+	
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
