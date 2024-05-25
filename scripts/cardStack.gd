@@ -20,6 +20,9 @@ var aiPlayer3 = []
 var tablePos = [Vector2(300,200),Vector2(390,200),Vector2(480,200),Vector2(570,200),Vector2(660,200)]
 var handPos = [Vector2(621,470),Vector2(706,470)]
 
+func firstRound():
+	pass
+
 func placeCards():
 	for i in range(2):
 		playerHand[i].set_position(handPos[i])
@@ -32,6 +35,10 @@ func placeCards():
 		aiPlayer1[i].visible(false)
 		aiPlayer2[i].visible(false)
 		aiPlayer3[i].visible(false)
+	
+	for i in range (42): # restliche karten verstecken
+		stack[10 + i].set_position(Vector2(-40,200))
+	
 	queue_redraw()
 	pass
 
