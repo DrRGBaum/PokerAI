@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://okvdo5etcrma"]
 
 [ext_resource type="Texture2D" uid="uid://citrhexvms2yc" path="res://assets/PixelCards.png" id="1_3jy3d"]
-[ext_resource type="Shader" path="res://scenes/card.gdshader" id="1_ficyj"]
+[ext_resource type="Shader" path="res://scenes/cardShine.gdshader" id="2_onmw5"]
 
 [sub_resource type="GDScript" id="GDScript_f4ry0"]
 script/source = "extends Node2D
@@ -20,9 +20,11 @@ var isVisible :bool = true
 func visible(pVisible :bool):
 	isVisible = pVisible
 	if pVisible:
-		$PixelPokerTest.region_rect = regionPos
+		$Area2D/CollisionShape2D/PixelPokerTest.region_rect = regionPos
+		# $PixelPokerTest.region_rect = regionPos
 	else:
-		$PixelPokerTest.region_rect = cardBack
+		$Area2D/CollisionShape2D/PixelPokerTest.region_rect = cardBack
+		# $PixelPokerTest.region_rect = cardBack
 	pass
 
 # Called when the node enters the scene tree for the first time.
@@ -30,7 +32,9 @@ func _ready():
 	# numb = value.lstrip(\"scdh_\") to check the number of the card
 	# print(value)
 	
-	$PixelPokerTest.region_rect = regionPos
+	$Area2D/CollisionShape2D/PixelPokerTest.region_rect = regionPos
+	#$PixelPokerTest.region_rect = regionPos
+	
 	queue_redraw()
 	pass # Replace with function body.
 
@@ -40,18 +44,28 @@ func _process(delta):
 	pass
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_s5c4f"]
-shader = ExtResource("1_ficyj")
-shader_parameter/line_color = Color(1, 1, 1, 1)
-shader_parameter/line_thickness = 1.0
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8n71y"]
 size = Vector2(96, 134)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lel7d"]
-shader = ExtResource("1_ficyj")
-shader_parameter/line_color = Color(1, 1, 1, 1)
-shader_parameter/line_thickness = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_80g86"]
+shader = ExtResource("2_onmw5")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/size = 1.0
+shader_parameter/squishness = Vector2(1, 1)
+shader_parameter/color1 = Color(1, 0, 0, 0)
+shader_parameter/color2 = Color(1, 0.0862745, 0, 0)
+shader_parameter/color3 = Color(0.776471, 0.2, 0, 0)
+shader_parameter/color4 = Color(1, 0.462745, 0, 0)
+shader_parameter/color5 = Color(1, 0.486275, 0, 0)
+shader_parameter/color6 = Color(1, 1, 0, 1)
+shader_parameter/step1 = 0.159
+shader_parameter/step2 = 0.182
+shader_parameter/step3 = 0.233
+shader_parameter/step4 = 0.264
+shader_parameter/step5 = 0.265
+shader_parameter/step6 = 1.0
 
 [node name="card" type="Node2D"]
 position = Vector2(40, 60)
@@ -60,7 +74,6 @@ script = SubResource("GDScript_f4ry0")
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-material = SubResource("ShaderMaterial_s5c4f")
 shape = SubResource("RectangleShape2D_8n71y")
 disabled = true
 
@@ -70,3 +83,10 @@ scale = Vector2(2, 2)
 texture = ExtResource("1_3jy3d")
 region_enabled = true
 region_rect = Rect2(0, 0, 40, 60)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_80g86")
+offset_left = -40.0
+offset_top = -60.0
+offset_right = 40.0
+offset_bottom = 60.0
