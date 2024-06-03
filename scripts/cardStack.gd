@@ -35,6 +35,11 @@ func placeCards():
 		aiPlayer1[i].visible(false)
 		aiPlayer2[i].visible(false)
 		aiPlayer3[i].visible(false)
+		
+		aiPlayer0[i].toggleGlow(false)
+		aiPlayer1[i].toggleGlow(false)
+		aiPlayer2[i].toggleGlow(false)
+		aiPlayer3[i].toggleGlow(false)
 	
 	for i in range (42): # restliche karten verstecken
 		stack[10 + i].set_position(Vector2(-40,200))
