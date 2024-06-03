@@ -10,10 +10,12 @@ var cardScene = preload(\"res://scenes/card.tscn\")
 
 var color = '' #bsp s für spades
 var number :int
+
 # Rect2(40,60,40,60)
 var regionPos = Rect2(560,0,40,60)
 var cardBack = Rect2(520,180,40,60)
 var isVisible :bool = true
+var glow :bool = false
 
 #TODO value handler
 
@@ -25,6 +27,11 @@ func visible(pVisible :bool):
 	else:
 
 		$PixelPokerTest.region_rect = cardBack
+	pass
+	
+func toggleGlow(pGlow :bool):
+	glow = pGlow
+	$glow.visible = pGlow
 	pass
 
 # Called when the node enters the scene tree for the first time.
@@ -66,13 +73,13 @@ shader_parameter/color2 = Color(1, 0.0862745, 0, 0)
 shader_parameter/color3 = Color(0.776471, 0.2, 0, 0)
 shader_parameter/color4 = Color(1, 0.462745, 0, 0)
 shader_parameter/color5 = Color(1, 0.486275, 0, 0)
-shader_parameter/color6 = Color(1, 1, 1, 1)
+shader_parameter/colorpick = null
 shader_parameter/step1 = 0.0
 shader_parameter/step2 = 0.0
 shader_parameter/step3 = 0.0
 shader_parameter/step4 = 0.0
 shader_parameter/step5 = 0.0
-shader_parameter/step6 = 1.0
+shader_parameter/step6 = 0.7
 shader_parameter/noise_scale = 0.7
 shader_parameter/noise_speed = 4.0
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_2siqf")

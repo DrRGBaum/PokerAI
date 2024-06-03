@@ -1,19 +1,16 @@
 shader_type canvas_item; // hours spend on this trivial effect: 14
 
-// Uniforms for the shader
 uniform vec2 center = vec2(0.5);
-uniform float size: hint_range(0.0,5.0) = 1.0; // Change size to adjust the size of the gradient
-uniform vec2 squishness = vec2(1.0); // How squashed your gradient is
+uniform float size: hint_range(0.0,5.0) = 1.0;
+uniform vec2 squishness = vec2(1.0);
 
-// Colors
 uniform vec4 color1 : source_color;
 uniform vec4 color2 : source_color;
 uniform vec4 color3 : source_color;
 uniform vec4 color4 : source_color;
 uniform vec4 color5 : source_color;
-uniform vec4 color6 : source_color;
+uniform vec4 colorpick : source_color;
 
-// Color steps
 uniform float step1 : hint_range(0.0,1.0) = 0.159;
 uniform float step2 : hint_range(0.0,1.0) = 0.182;
 uniform float step3 : hint_range(0.0,1.0) = 0.233;
@@ -23,14 +20,14 @@ uniform float step6 : hint_range(0.0,1.0) = 0.266;
 
 // Noise texture for the shader
 uniform sampler2D noise_texture:repeat_enable;
-uniform float noise_scale = 0.2; // Increased noise scale
-uniform float noise_speed = 2.0; // Increased noise speed
+uniform float noise_scale;
+uniform float noise_speed;
 
 vec4 rgb_spectrum(float t) {
     float r = sin(t * 6.28318) * 0.5;
     float g = sin(t * 6.28318 + 2.09439) * 0.5 + 0.5;
     float b = sin(t * 6.28318 + 4.18879) * 0.5 + 0.5;
-    return vec4(r, g, b, 0.5); // Lowered alpha value to make it more transparent
+    return vec4(r, g, b, 0.5);
 }
 
 void fragment() {
@@ -50,8 +47,7 @@ void fragment() {
     color = mix(color, color5, smoothstep(step4 * size, step5 * size, dist));
     color = mix(color, anim_color, smoothstep(step5 * size, step6 * size, dist));
     
-    // Adjust alpha value of the final color
-    color.a *= 0.3; // Adjust the alpha value here
+    color.a *= 0.3;
     
     COLOR = color;
 }
