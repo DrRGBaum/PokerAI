@@ -1,5 +1,4 @@
-shader_type canvas_item;
-render_mode blend_mix; // Comment this if you want another render mode.
+shader_type canvas_item; // hours spend on this trivial effect: 14
 
 // Uniforms for the shader
 uniform vec2 center = vec2(0.5);
@@ -24,24 +23,17 @@ uniform float step6 : hint_range(0.0,1.0) = 0.266;
 
 // Noise texture for the shader
 uniform sampler2D noise_texture:repeat_enable;
-uniform float noise_scale = 0.1;
-uniform float noise_speed = 1.0;
-uniform float loop_duration = 10.0;
-
-// Brightness factor
-uniform float brightness_factor : hint_range(1.0, 5.0) = 1.5;
+uniform float noise_scale = 0.2; // Increased noise scale
+uniform float noise_speed = 2.0; // Increased noise speed
 
 vec4 rgb_spectrum(float t) {
-    float r = sin(t * 6.28318) * 0.5 + 0.5;
+    float r = sin(t * 6.28318) * 0.5;
     float g = sin(t * 6.28318 + 2.09439) * 0.5 + 0.5;
     float b = sin(t * 6.28318 + 4.18879) * 0.5 + 0.5;
-    return vec4(r, g, b, 1.0);
+    return vec4(r, g, b, 0.5); // Lowered alpha value to make it more transparent
 }
 
 void fragment() {
-    // Time variable to animate the noise
-    float time = mod(TIME / loop_duration, 1.0);
-    
     // Sample noise texture and create a perturbation
     vec2 noise_uv = UV + noise_scale * texture(noise_texture, UV - TIME / (1.0 + noise_speed)).rg;
     
@@ -58,11 +50,8 @@ void fragment() {
     color = mix(color, color5, smoothstep(step4 * size, step5 * size, dist));
     color = mix(color, anim_color, smoothstep(step5 * size, step6 * size, dist));
     
-	// Apply brightness factor
-    color.rgb *= brightness_factor;
+    // Adjust alpha value of the final color
+    color.a *= 0.3; // Adjust the alpha value here
     
-    // Ensure the final color is within valid range
-    color = clamp(color, 0.0, 1.0);
-	
     COLOR = color;
 }

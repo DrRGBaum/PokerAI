@@ -47,19 +47,19 @@ func _process(delta):
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lel7d"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_3n2nj"]
-frequency = 0.0391
+frequency = 0.001
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2siqf"]
-width = 16
-height = 16
+width = 128
+height = 128
 seamless = true
-seamless_blend_skirt = 0.5
+seamless_blend_skirt = 0.6
 noise = SubResource("FastNoiseLite_3n2nj")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_80g86"]
 shader = ExtResource("2_onmw5")
-shader_parameter/center = Vector2(0.6, 0.6)
-shader_parameter/size = 2.234
+shader_parameter/center = Vector2(1, 1)
+shader_parameter/size = 1.0
 shader_parameter/squishness = Vector2(1, 1)
 shader_parameter/color1 = Color(1, 1, 0, 0)
 shader_parameter/color2 = Color(1, 0.0862745, 0, 0)
@@ -73,10 +73,8 @@ shader_parameter/step3 = 0.0
 shader_parameter/step4 = 0.0
 shader_parameter/step5 = 0.0
 shader_parameter/step6 = 1.0
-shader_parameter/noise_scale = 0.1
-shader_parameter/noise_speed = 2.0
-shader_parameter/loop_duration = 10.0
-shader_parameter/brightness_factor = 1.5
+shader_parameter/noise_scale = 0.7
+shader_parameter/noise_speed = 4.0
 shader_parameter/noise_texture = SubResource("NoiseTexture2D_2siqf")
 
 [node name="card" type="Node2D"]
@@ -90,7 +88,9 @@ texture = ExtResource("1_3jy3d")
 region_enabled = true
 region_rect = Rect2(0, 0, 40, 60)
 
-[node name="ColorRect3" type="ColorRect" parent="."]
+[node name="glow" type="Node2D" parent="."]
+
+[node name="ColorRect3" type="ColorRect" parent="glow"]
 material = SubResource("ShaderMaterial_80g86")
 clip_contents = true
 offset_left = -38.0
@@ -98,7 +98,7 @@ offset_top = -58.0
 offset_right = 38.0
 offset_bottom = 58.0
 
-[node name="ColorRect2" type="ColorRect" parent="."]
+[node name="ColorRect2" type="ColorRect" parent="glow"]
 material = SubResource("ShaderMaterial_80g86")
 clip_contents = true
 offset_left = -40.0
@@ -106,17 +106,10 @@ offset_top = -56.0
 offset_right = 40.0
 offset_bottom = 56.0
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="glow"]
 material = SubResource("ShaderMaterial_80g86")
 clip_contents = true
 offset_left = -36.0
 offset_top = -60.0
 offset_right = 36.0
 offset_bottom = 60.0
-
-[node name="Area2D" type="Area2D" parent="."]
-visible = false
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PackedVector2Array(-40, -56, -38, -56, -38, -58, -36, -58, -36, -60, 36, -60, 36, -58, 38, -58, 38, -56, 40, -56, 40, 56, 38, 56, 38, 58, 36, 58, 36, 60, -36, 60, -36, 58, -38, 58, -38, 56, -40, 56)
-disabled = true

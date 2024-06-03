@@ -1,13 +1,17 @@
 shader_type canvas_item;
 
-uniform sampler2D n;
-uniform float intensity = 0.0f;
-uniform float speed = 1.0f;
+uniform float time;
 
 void fragment() {
-	vec4 tx = texture(TEXTURE, UV);
-	vec4 noise = texture(n, UV - TIME / (1.0f + speed));
-	COLOR.a = clamp(tx.r * noise.r * intensity, 0.0f, 1.0f);
-	COLOR.a = pow(COLOR.a, 2);
-	
+    // Calculate color transition using time
+    float t = abs(sin(TIME));
+    
+    // Calculate RGB values
+    vec3 color = vec3(0.0);
+    color.r = smoothstep(0.0, 1.0, t - 0.5);
+    color.g = smoothstep(0.0, 1.0, t);
+    color.b = smoothstep(0.0, 1.0, t + 0.5);
+    
+    // Output final color
+    COLOR = vec4(color, 1.0);
 }
