@@ -97,6 +97,7 @@ region_enabled = true
 region_rect = Rect2(0, 0, 40, 60)
 
 [node name="glow" type="Node2D" parent="."]
+visible = false
 
 [node name="ColorRect3" type="ColorRect" parent="glow"]
 material = SubResource("ShaderMaterial_80g86")

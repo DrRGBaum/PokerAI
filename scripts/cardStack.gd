@@ -23,6 +23,12 @@ var handPos = [Vector2(621,470),Vector2(706,470)]
 func firstRound():
 	for i in range(3):
 		stack[10 + i].set_position(tablePos[i])
+		table.append(stack[10 + i])
+	pass
+
+func nextRound(round :int):
+	stack[12 + round].set_position(tablePos[2 + round])
+	table.append(stack[12 + round])
 	pass
 
 func placeCards():
