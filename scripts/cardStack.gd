@@ -21,6 +21,8 @@ var tablePos = [Vector2(300,200),Vector2(390,200),Vector2(480,200),Vector2(570,2
 var handPos = [Vector2(621,470),Vector2(706,470)]
 
 func firstRound():
+	for i in range(3):
+		stack[10 + i].set_position(tablePos[i])
 	pass
 
 func placeCards():

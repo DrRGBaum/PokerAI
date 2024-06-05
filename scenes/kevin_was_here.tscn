@@ -10,6 +10,7 @@ script/source = "extends Node2D
 # also rundenablauf usw
 
 var playerHand = []
+var round = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -23,6 +24,13 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+
+func _on_next_round_pressed() -> void:
+	var cardStack = $cardStack
+	match round:
+		0: cardStack.firstRound(); round += 1
+	pass # Replace with function body.
 "
 
 [node name="KevinWasHere" type="Node2D"]
@@ -37,11 +45,19 @@ position = Vector2(480, 270)
 scale = Vector2(2, 2)
 texture = ExtResource("1_bf4rc")
 
-[node name="Button" type="Button" parent="."]
+[node name="visibility" type="Button" parent="."]
 offset_left = 968.0
 offset_top = 110.0
 offset_right = 1115.0
 offset_bottom = 144.0
-text = "Visible test"
+text = "Visibility test"
 
-[connection signal="pressed" from="Button" to="cardStack" method="_on_button_pressed"]
+[node name="nextRound" type="Button" parent="."]
+offset_left = 969.0
+offset_top = 165.0
+offset_right = 1116.0
+offset_bottom = 199.0
+text = "Next round"
+
+[connection signal="pressed" from="visibility" to="cardStack" method="_on_button_pressed"]
+[connection signal="pressed" from="nextRound" to="." method="_on_next_round_pressed"]
