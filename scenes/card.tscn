@@ -38,6 +38,7 @@ func toggleGlow(pGlow :bool):
 func _ready():
 	# numb = value.lstrip(\"scdh_\") to check the number of the card
 	# print(value)
+	print(color, number)
 	
 
 	$PixelPokerTest.region_rect = regionPos

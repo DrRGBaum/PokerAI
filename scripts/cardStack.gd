@@ -78,6 +78,12 @@ func _ready(): # erstellt einen kartenstapel mit den kartenobjekten
 			var instance = cardScene.instantiate()
 			instance.regionPos = Rect2(40*j,60*i,40,60)
 			instance.set_position(tablePos[4])
+			instance.number = j
+			match i: # spades, hearts, clubs, diamonds
+				0: instance.color = "s"
+				1: instance.color = "h"
+				2: instance.color = "c"
+				3: instance.color = "d"
 			stack.append(instance)
 			add_child(instance)
 	pass 
