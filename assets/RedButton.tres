@@ -1,11 +1,11 @@
-[gd_resource type="Theme" load_steps=9 format=3 uid="uid://bpcv3ukjdvheb"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://bpcv3ukjdvheb"]
 
-[ext_resource type="Texture2D" uid="uid://cf0vnfqrjwx5h" path="res://assets/DissabledButton.png" id="1_7yk85"]
 [ext_resource type="FontFile" uid="uid://blbau786a0lwj" path="res://assets/Minecraftia-Regular.ttf" id="1_8dx5l"]
 [ext_resource type="Texture2D" uid="uid://d251v8pw8erbe" path="res://assets/Button.png" id="3_7rawo"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n0ccw"]
-texture = ExtResource("1_7yk85")
+texture = ExtResource("3_7rawo")
+modulate_color = Color(0.392157, 0.392157, 0.392157, 1)
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l4ync"]
 

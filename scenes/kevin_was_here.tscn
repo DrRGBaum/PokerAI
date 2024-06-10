@@ -62,21 +62,38 @@ scale = Vector2(2, 2)
 texture = ExtResource("2_d4wik")
 
 [node name="visibility" type="Button" parent="."]
-offset_left = 968.0
-offset_top = 110.0
-offset_right = 1115.0
-offset_bottom = 144.0
+offset_left = 301.0
+offset_top = 344.0
+offset_right = 448.0
+offset_bottom = 378.0
 text = "Visibility test"
 
 [node name="nextRound" type="Button" parent="."]
-offset_left = 968.0
-offset_top = 165.0
-offset_right = 1115.0
-offset_bottom = 199.0
+offset_left = 512.0
+offset_top = 343.0
+offset_right = 659.0
+offset_bottom = 377.0
 text = "Next round"
 clip_text = true
 
 [node name="UI" type="Node2D" parent="."]
+
+[node name="round" type="Label" parent="UI"]
+offset_left = 310.0
+offset_top = 16.0
+offset_right = 650.0
+offset_bottom = 78.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "Hallo Welt"
+horizontal_alignment = 1
+
+[node name="moneten" type="Label" parent="UI"]
+offset_left = 826.0
+offset_top = 440.0
+offset_right = 948.0
+offset_bottom = 466.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "$ Moneten"
 
 [node name="raise" type="Button" parent="UI"]
 offset_left = 20.0
@@ -112,19 +129,8 @@ text = "FOLD"
 icon_alignment = 1
 expand_icon = true
 
-[node name="RichTextLabel" type="RichTextLabel" parent="UI"]
-offset_left = 826.0
-offset_top = 442.0
-offset_right = 948.0
-offset_bottom = 470.0
-theme_override_fonts/normal_font = ExtResource("5_hkgxv")
-theme_override_font_sizes/normal_font_size = 16
-text = "$ Moneten"
-scroll_active = false
-
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
-zoom = Vector2(1.2, 1.2)
 
 [connection signal="pressed" from="visibility" to="cardStack" method="_on_button_pressed"]
 [connection signal="pressed" from="nextRound" to="." method="_on_next_round_pressed"]
