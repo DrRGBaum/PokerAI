@@ -1,0 +1,49 @@
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://bpcv3ukjdvheb"]
+
+[ext_resource type="Texture2D" uid="uid://cf0vnfqrjwx5h" path="res://assets/DissabledButton.png" id="1_7yk85"]
+[ext_resource type="FontFile" uid="uid://blbau786a0lwj" path="res://assets/Minecraftia-Regular.ttf" id="1_8dx5l"]
+[ext_resource type="Texture2D" uid="uid://d251v8pw8erbe" path="res://assets/Button.png" id="3_7rawo"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_n0ccw"]
+texture = ExtResource("1_7yk85")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l4ync"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_hub6x"]
+texture = ExtResource("3_7rawo")
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y0dij"]
+texture = ExtResource("3_7rawo")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_bqu58"]
+texture = ExtResource("3_7rawo")
+modulate_color = Color(0.784314, 0.784314, 0.784314, 1)
+
+[resource]
+Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+Button/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/font_outline_color = Color(1, 1, 1, 1)
+Button/colors/font_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_disabled_color = Color(1, 1, 1, 0.4)
+Button/colors/icon_focus_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_color = Color(1, 1, 1, 1)
+Button/colors/icon_hover_pressed_color = Color(1, 1, 1, 1)
+Button/colors/icon_normal_color = Color(1, 1, 1, 1)
+Button/colors/icon_pressed_color = Color(1, 1, 1, 1)
+Button/constants/h_separation = 4
+Button/constants/icon_max_width = 0
+Button/constants/outline_size = 0
+Button/font_sizes/font_size = 24
+Button/fonts/font = ExtResource("1_8dx5l")
+Button/styles/disabled = SubResource("StyleBoxTexture_n0ccw")
+Button/styles/focus = SubResource("StyleBoxTexture_l4ync")
+Button/styles/hover = SubResource("StyleBoxTexture_hub6x")
+Button/styles/normal = SubResource("StyleBoxTexture_y0dij")
+Button/styles/pressed = SubResource("StyleBoxTexture_bqu58")

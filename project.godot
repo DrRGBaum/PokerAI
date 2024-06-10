@@ -15,6 +15,10 @@ run/main_scene="res://scenes/kevin_was_here.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/resizable=false
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0

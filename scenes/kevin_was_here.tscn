@@ -1,7 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://mwkit2xcnixu"]
+[gd_scene load_steps=11 format=3 uid="uid://mwkit2xcnixu"]
 
-[ext_resource type="Texture2D" uid="uid://bs82sgjchvj7n" path="res://assets/pokerTableV0.5.png" id="1_bf4rc"]
 [ext_resource type="Script" path="res://scripts/cardStack.gd" id="2_bowx6"]
+[ext_resource type="Texture2D" uid="uid://wvvyk55beoe8" path="res://assets/pokerTableV0.9.png" id="2_d4wik"]
+[ext_resource type="Texture2D" uid="uid://d251v8pw8erbe" path="res://assets/Button.png" id="3_f0dch"]
+[ext_resource type="Theme" uid="uid://bpcv3ukjdvheb" path="res://assets/RedButton.tres" id="3_ynihg"]
+[ext_resource type="FontFile" uid="uid://blbau786a0lwj" path="res://assets/Minecraftia-Regular.ttf" id="5_hkgxv"]
 
 [sub_resource type="GDScript" id="GDScript_mi2am"]
 script/source = "extends Node2D
@@ -36,6 +39,16 @@ func _on_next_round_pressed() -> void:
 	pass # Replace with function body.
 "
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xyd3j"]
+texture = ExtResource("3_f0dch")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_agofi"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ve2ny"]
+texture = ExtResource("3_f0dch")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_42sht"]
+
 [node name="KevinWasHere" type="Node2D"]
 script = SubResource("GDScript_mi2am")
 
@@ -46,7 +59,7 @@ script = ExtResource("2_bowx6")
 [node name="PokerTableV0_5" type="Sprite2D" parent="."]
 position = Vector2(480, 270)
 scale = Vector2(2, 2)
-texture = ExtResource("1_bf4rc")
+texture = ExtResource("2_d4wik")
 
 [node name="visibility" type="Button" parent="."]
 offset_left = 968.0
@@ -62,6 +75,56 @@ offset_right = 1115.0
 offset_bottom = 199.0
 text = "Next round"
 clip_text = true
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="raise" type="Button" parent="UI"]
+offset_left = 20.0
+offset_top = 420.0
+offset_right = 120.0
+offset_bottom = 500.0
+theme = ExtResource("3_ynihg")
+text = "RAISE"
+icon_alignment = 1
+expand_icon = true
+
+[node name="call" type="Button" parent="UI"]
+offset_left = 150.0
+offset_top = 420.0
+offset_right = 250.0
+offset_bottom = 500.0
+theme = ExtResource("3_ynihg")
+theme_override_styles/normal = SubResource("StyleBoxTexture_xyd3j")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_agofi")
+text = "CALL"
+icon_alignment = 1
+expand_icon = true
+
+[node name="fold" type="Button" parent="UI"]
+offset_left = 280.0
+offset_top = 420.0
+offset_right = 380.0
+offset_bottom = 500.0
+theme = ExtResource("3_ynihg")
+theme_override_styles/normal = SubResource("StyleBoxTexture_ve2ny")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_42sht")
+text = "FOLD"
+icon_alignment = 1
+expand_icon = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="UI"]
+offset_left = 826.0
+offset_top = 442.0
+offset_right = 948.0
+offset_bottom = 470.0
+theme_override_fonts/normal_font = ExtResource("5_hkgxv")
+theme_override_font_sizes/normal_font_size = 16
+text = "$ Moneten"
+scroll_active = false
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+zoom = Vector2(1.2, 1.2)
 
 [connection signal="pressed" from="visibility" to="cardStack" method="_on_button_pressed"]
 [connection signal="pressed" from="nextRound" to="." method="_on_next_round_pressed"]
