@@ -29,7 +29,7 @@ func visible(pVisible :bool):
 		$PixelPokerTest.region_rect = cardBack
 	pass
 	
-func toggleGlow(pGlow :bool):
+func setGlow(pGlow :bool):
 	glow = pGlow
 	$glow.visible = pGlow
 	pass

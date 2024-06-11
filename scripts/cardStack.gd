@@ -34,20 +34,21 @@ func nextRound(round :int):
 func placeCards():
 	for i in range(2):
 		playerHand[i].set_position(handPos[i])
-		aiPlayer0[i].set_position(Vector2(90 + (i * 40),290))
-		aiPlayer1[i].set_position(Vector2(90 + (i * 40),110))
-		aiPlayer2[i].set_position(Vector2(830 + (i * 40),110))
-		aiPlayer3[i].set_position(Vector2(830 + (i * 40),290))
+		playerHand[i].setGlow(true)
+		aiPlayer0[i].set_position(Vector2(70 + (i * 40),310))
+		aiPlayer1[i].set_position(Vector2(70 + (i * 40),90))
+		aiPlayer2[i].set_position(Vector2(850 + (i * 40),90))
+		aiPlayer3[i].set_position(Vector2(850 + (i * 40),310))
 		
 		aiPlayer0[i].visible(false)
 		aiPlayer1[i].visible(false)
 		aiPlayer2[i].visible(false)
 		aiPlayer3[i].visible(false)
 		
-		aiPlayer0[i].toggleGlow(false)
-		aiPlayer1[i].toggleGlow(false)
-		aiPlayer2[i].toggleGlow(false)
-		aiPlayer3[i].toggleGlow(false)
+		aiPlayer0[i].set_z_index(i)
+		aiPlayer1[i].set_z_index(i)
+		aiPlayer2[i].set_z_index(i)
+		aiPlayer3[i].set_z_index(i)
 	
 	for i in range (42): # restliche karten verstecken
 		stack[10 + i].set_position(Vector2(-40,200))
