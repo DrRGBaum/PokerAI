@@ -1,7 +1,7 @@
 extends Node2D
 
-var aiMoney = [420,69,42,187]
-var aiBettings = [0,1,2,3]
+var aiMoney = [1000,1000,1000,1000]
+var aiBettings = [0,0,0,0]
 
 @onready var aiMoneten = [$aiMoneten0,$aiMoneten1,$aiMoneten2,$aiMoneten3]
 @onready var aiBet = [$bet0,$bet1,$bet2,$bet3]

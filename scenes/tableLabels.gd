@@ -12,14 +12,22 @@ var tablePot = 900
 @onready var bet = $bet
 @onready var pot = $pot
 
+@onready var sliderLabel = $sliderText
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	info.set_text(infoText)
 	moneten.set_text("$ " + str(money))
 	bet.set_text("Current bet: \n$ " + str(currentBet) + "\n" + "Your bet: \n$" + str(betting))
+	pot.set_text("")
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
+
+func _on_slider_value_changed(value: float) -> void:
+	sliderLabel.set_text("$ " + str(value))
+	pass # Replace with function body.

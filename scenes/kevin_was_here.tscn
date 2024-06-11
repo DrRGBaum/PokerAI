@@ -136,6 +136,17 @@ theme_override_fonts/font = ExtResource("5_hkgxv")
 text = "Pot: $Moneten"
 horizontal_alignment = 1
 
+[node name="sliderText" type="Label" parent="UI/tableLabels"]
+z_index = 5
+offset_left = 20.0
+offset_top = 509.0
+offset_right = 120.0
+offset_bottom = 537.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+theme_override_font_sizes/font_size = 16
+text = "$ 0"
+horizontal_alignment = 1
+
 [node name="buttons" type="Node2D" parent="UI"]
 
 [node name="raise" type="Button" parent="UI/buttons"]
@@ -172,11 +183,15 @@ text = "FOLD"
 icon_alignment = 1
 expand_icon = true
 
-[node name="HSlider" type="HSlider" parent="UI/buttons"]
-offset_left = 20.0
-offset_top = 513.0
-offset_right = 120.0
+[node name="slider" type="HSlider" parent="UI/buttons"]
+offset_left = 16.0
+offset_top = 500.0
+offset_right = 125.0
 offset_bottom = 540.0
+theme = ExtResource("3_ynihg")
+rounded = true
+allow_greater = true
+allow_lesser = true
 
 [node name="aiPlayer" type="Node2D" parent="UI"]
 script = ExtResource("6_k2n7h")
@@ -297,3 +312,4 @@ anchor_mode = 0
 [connection signal="pressed" from="UI/buttons/raise" to="." method="_on_raise_pressed"]
 [connection signal="pressed" from="UI/buttons/call" to="." method="_on_call_pressed"]
 [connection signal="pressed" from="UI/buttons/fold" to="." method="_on_fold_pressed"]
+[connection signal="value_changed" from="UI/buttons/slider" to="UI/tableLabels" method="_on_slider_value_changed"]
