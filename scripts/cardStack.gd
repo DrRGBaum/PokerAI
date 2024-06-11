@@ -8,6 +8,8 @@ var cardScene = preload("res://scenes/card.tscn")
 
 var stack = []
 var table = []
+var hide = Vector2(480,-60)
+
 var playerHand = []
 var aiPlayer0 = [] # lowkey ineffizient
 var aiPlayer1 = [] # problem für später tbh
@@ -20,25 +22,38 @@ var aiPlayer3 = []
 var tablePos = [Vector2(300,200),Vector2(390,200),Vector2(480,200),Vector2(570,200),Vector2(660,200)]
 var handPos = [Vector2(621,470),Vector2(706,470)]
 
+var animationQue = []
+
 func firstRound():
 	for i in range(3):
-		stack[10 + i].set_position(tablePos[i])
+		# stack[10 + i].set_position(tablePos[i])
+		animPos(stack[10 + i],tablePos[i],i * 0.1)
 		table.append(stack[10 + i])
 	pass
 
 func nextRound(round :int):
-	stack[12 + round].set_position(tablePos[2 + round])
+	animPos(stack[12 + round],tablePos[2 + round],0)
+	# var tween = get_tree().create_tween()
+	# tween.tween_property(stack[12 + round],"position",tablePos[2 + round], 0.3).set_trans(Tween.TRANS_QUINT)
+	# stack[12 + round].set_position(tablePos[2 + round])
 	table.append(stack[12 + round])
 	pass
 
 func placeCards():
 	for i in range(2):
-		playerHand[i].set_position(handPos[i])
+		animPos(playerHand[i],handPos[i],i * 0.9)
+		
 		playerHand[i].setGlow(true)
-		aiPlayer0[i].set_position(Vector2(70 + (i * 40),310))
-		aiPlayer1[i].set_position(Vector2(70 + (i * 40),90))
-		aiPlayer2[i].set_position(Vector2(850 + (i * 40),90))
-		aiPlayer3[i].set_position(Vector2(850 + (i * 40),310))
+		
+		animPos(aiPlayer0[i],Vector2(70 + (i * 40),310),i*0.4 + 0.1)
+		animPos(aiPlayer1[i],Vector2(70 + (i * 40),90),i*0.4 + 0.2)
+		animPos(aiPlayer2[i],Vector2(850 + (i * 40),90),i*0.4 + 0.3)
+		animPos(aiPlayer3[i],Vector2(850 + (i * 40),310),i*0.4 + 0.4)
+		
+		# aiPlayer0[i].set_position(Vector2(70 + (i * 40),310))
+		# aiPlayer1[i].set_position(Vector2(70 + (i * 40),90))
+		# aiPlayer2[i].set_position(Vector2(850 + (i * 40),90))
+		# aiPlayer3[i].set_position(Vector2(850 + (i * 40),310))
 		
 		aiPlayer0[i].visible(false)
 		aiPlayer1[i].visible(false)
@@ -51,7 +66,7 @@ func placeCards():
 		aiPlayer3[i].set_z_index(i)
 	
 	for i in range (42): # restliche karten verstecken
-		stack[10 + i].set_position(Vector2(-40,200))
+		stack[10 + i].set_position(Vector2(480,-60))
 	
 	queue_redraw()
 	pass
@@ -86,7 +101,7 @@ func _ready(): # erstellt einen kartenstapel mit den kartenobjekten
 		for j in range(13):
 			var instance = cardScene.instantiate()
 			instance.regionPos = Rect2(40*j,60*i,40,60)
-			instance.set_position(tablePos[4])
+			instance.set_position(hide)
 			instance.number = j
 			match i: # spades, hearts, clubs, diamonds
 				0: instance.color = "s"
@@ -95,11 +110,18 @@ func _ready(): # erstellt einen kartenstapel mit den kartenobjekten
 				3: instance.color = "d"
 			stack.append(instance)
 			add_child(instance)
-	pass 
+
+func process_que():
+	if animationQue.size() > 0:
+		var animation = animationQue[0]
+		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func wait(seconds: float):
+	await get_tree().create_timer(seconds).timeout
 
 var flip = true
 func _on_button_pressed() -> void:
@@ -110,3 +132,8 @@ func _on_button_pressed() -> void:
 		aiPlayer2[i].visible(flip)
 		aiPlayer3[i].visible(flip)
 	pass # Replace with function body.
+	
+func animPos(pSprite:Object,pPos:Vector2,pDelay):
+	var tween = get_tree().create_tween()
+	tween.tween_property(pSprite,"position",pPos, 0.25).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT).set_delay(pDelay)
+	

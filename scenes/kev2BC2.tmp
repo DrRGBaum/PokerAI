@@ -1,9 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://mwkit2xcnixu"]
+[gd_scene load_steps=12 format=3 uid="uid://mwkit2xcnixu"]
 
 [ext_resource type="Script" path="res://scripts/cardStack.gd" id="2_bowx6"]
 [ext_resource type="Texture2D" uid="uid://wvvyk55beoe8" path="res://assets/pokerTableV0.9.png" id="2_d4wik"]
 [ext_resource type="Texture2D" uid="uid://d251v8pw8erbe" path="res://assets/Button.png" id="3_f0dch"]
-[ext_resource type="Script" path="res://scenes/tableLabels.gd" id="3_vg1m3"]
 [ext_resource type="Theme" uid="uid://bpcv3ukjdvheb" path="res://assets/RedButton.tres" id="3_ynihg"]
 [ext_resource type="FontFile" uid="uid://blbau786a0lwj" path="res://assets/Minecraftia-Regular.ttf" id="5_hkgxv"]
 [ext_resource type="Script" path="res://scenes/aiPlayer.gd" id="6_k2n7h"]
@@ -38,18 +37,6 @@ func _on_next_round_pressed() -> void:
 		1: cardStack.nextRound(round); round += 1
 		2: cardStack.nextRound(round); round += 1
 		3: pass #logic for after round
-	pass # Replace with function body.
-
-
-func _on_raise_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_call_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_fold_pressed() -> void:
 	pass # Replace with function body.
 "
 
@@ -96,7 +83,6 @@ clip_text = true
 [node name="UI" type="Node2D" parent="."]
 
 [node name="tableLabels" type="Node2D" parent="UI"]
-script = ExtResource("3_vg1m3")
 
 [node name="round" type="Label" parent="UI/tableLabels"]
 offset_left = 309.0
@@ -288,6 +274,3 @@ anchor_mode = 0
 
 [connection signal="pressed" from="visibility" to="cardStack" method="_on_button_pressed"]
 [connection signal="pressed" from="nextRound" to="." method="_on_next_round_pressed"]
-[connection signal="pressed" from="UI/buttons/raise" to="." method="_on_raise_pressed"]
-[connection signal="pressed" from="UI/buttons/call" to="." method="_on_call_pressed"]
-[connection signal="pressed" from="UI/buttons/fold" to="." method="_on_fold_pressed"]
