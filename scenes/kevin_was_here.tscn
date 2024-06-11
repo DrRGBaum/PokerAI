@@ -1,57 +1,13 @@
 [gd_scene load_steps=13 format=3 uid="uid://mwkit2xcnixu"]
 
+[ext_resource type="Script" path="res://scripts/pokerTable.gd" id="1_isv6e"]
 [ext_resource type="Script" path="res://scripts/cardStack.gd" id="2_bowx6"]
 [ext_resource type="Texture2D" uid="uid://wvvyk55beoe8" path="res://assets/pokerTableV0.9.png" id="2_d4wik"]
 [ext_resource type="Texture2D" uid="uid://d251v8pw8erbe" path="res://assets/Button.png" id="3_f0dch"]
-[ext_resource type="Script" path="res://scenes/tableLabels.gd" id="3_vg1m3"]
+[ext_resource type="Script" path="res://scripts/tableLabels.gd" id="3_vg1m3"]
 [ext_resource type="Theme" uid="uid://bpcv3ukjdvheb" path="res://assets/RedButton.tres" id="3_ynihg"]
 [ext_resource type="FontFile" uid="uid://blbau786a0lwj" path="res://assets/Minecraftia-Regular.ttf" id="5_hkgxv"]
-[ext_resource type="Script" path="res://scenes/aiPlayer.gd" id="6_k2n7h"]
-
-[sub_resource type="GDScript" id="GDScript_mi2am"]
-script/source = "extends Node2D
-
-# hier läuft die game logic
-# also rundenablauf usw
-
-var playerHand = []
-var round = 0
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	var cardStack = $cardStack
-	# cardStack.shuffelCards()
-	# cardStack.display()
-	cardStack.deal()
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
-
-func _on_next_round_pressed() -> void:
-	var cardStack = $cardStack
-	match round:
-		0: cardStack.firstRound(); round += 1
-		1: cardStack.nextRound(round); round += 1
-		2: cardStack.nextRound(round); round += 1
-		3: pass #logic for after round
-	pass # Replace with function body.
-
-
-func _on_raise_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_call_pressed() -> void:
-	pass # Replace with function body.
-
-
-func _on_fold_pressed() -> void:
-	pass # Replace with function body.
-"
+[ext_resource type="Script" path="res://scripts/aiPlayer.gd" id="6_k2n7h"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xyd3j"]
 texture = ExtResource("3_f0dch")
@@ -63,8 +19,8 @@ texture = ExtResource("3_f0dch")
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_42sht"]
 
-[node name="KevinWasHere" type="Node2D"]
-script = SubResource("GDScript_mi2am")
+[node name="pokerTable" type="Node2D"]
+script = ExtResource("1_isv6e")
 metadata/_edit_horizontal_guides_ = [256.0, 150.0, 32.0, 370.0]
 metadata/_edit_vertical_guides_ = [150.0, 810.0]
 
@@ -86,10 +42,10 @@ offset_bottom = 378.0
 text = "Visibility test"
 
 [node name="nextRound" type="Button" parent="."]
-offset_left = 512.0
-offset_top = 343.0
-offset_right = 659.0
-offset_bottom = 377.0
+offset_left = 597.0
+offset_top = 319.0
+offset_right = 744.0
+offset_bottom = 353.0
 text = "Next round"
 clip_text = true
 
@@ -99,6 +55,7 @@ clip_text = true
 script = ExtResource("3_vg1m3")
 
 [node name="info" type="Label" parent="UI/tableLabels"]
+visible = false
 offset_left = 309.0
 offset_top = 16.0
 offset_right = 649.0
@@ -129,9 +86,9 @@ $ 0"
 
 [node name="pot" type="Label" parent="UI/tableLabels"]
 offset_left = 351.0
-offset_top = 282.0
+offset_top = 90.0
 offset_right = 609.0
-offset_bottom = 310.0
+offset_bottom = 118.0
 theme_override_fonts/font = ExtResource("5_hkgxv")
 text = "Pot: $Moneten"
 horizontal_alignment = 1
@@ -147,6 +104,15 @@ theme_override_font_sizes/font_size = 16
 text = "$ 0"
 horizontal_alignment = 1
 
+[node name="playerName" type="Label" parent="UI/tableLabels"]
+offset_left = 363.0
+offset_top = 365.0
+offset_right = 597.0
+offset_bottom = 388.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "$playerName"
+horizontal_alignment = 1
+
 [node name="buttons" type="Node2D" parent="UI"]
 
 [node name="raise" type="Button" parent="UI/buttons"]
@@ -155,6 +121,7 @@ offset_top = 420.0
 offset_right = 120.0
 offset_bottom = 500.0
 theme = ExtResource("3_ynihg")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 text = "RAISE"
 icon_alignment = 1
 expand_icon = true
@@ -165,6 +132,7 @@ offset_top = 420.0
 offset_right = 250.0
 offset_bottom = 500.0
 theme = ExtResource("3_ynihg")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_xyd3j")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_agofi")
 text = "CALL"
@@ -177,6 +145,7 @@ offset_top = 420.0
 offset_right = 380.0
 offset_bottom = 500.0
 theme = ExtResource("3_ynihg")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_styles/normal = SubResource("StyleBoxTexture_ve2ny")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_42sht")
 text = "FOLD"
@@ -197,12 +166,13 @@ allow_lesser = true
 script = ExtResource("6_k2n7h")
 
 [node name="aiPlayer0" type="Label" parent="UI/aiPlayer"]
-offset_left = 106.0
+offset_left = 20.0
 offset_top = 228.0
 offset_right = 150.0
 offset_bottom = 256.0
 theme_override_fonts/font = ExtResource("5_hkgxv")
 text = "AI 1"
+horizontal_alignment = 2
 clip_text = true
 
 [node name="aiMoneten0" type="Label" parent="UI/aiPlayer"]
@@ -224,12 +194,13 @@ theme_override_fonts/font = ExtResource("5_hkgxv")
 text = "Bet"
 
 [node name="aiPlayer1" type="Label" parent="UI/aiPlayer"]
-offset_left = 106.0
+offset_left = 28.0
 offset_top = 4.0
 offset_right = 150.0
 offset_bottom = 32.0
 theme_override_fonts/font = ExtResource("5_hkgxv")
 text = "AI 2"
+horizontal_alignment = 2
 clip_text = true
 
 [node name="aiMoneten1" type="Label" parent="UI/aiPlayer"]
@@ -251,12 +222,12 @@ theme_override_fonts/font = ExtResource("5_hkgxv")
 text = "Bet"
 
 [node name="aiPlayer2" type="Label" parent="UI/aiPlayer"]
-offset_left = 810.0
+offset_left = 806.0
 offset_top = 4.0
-offset_right = 858.0
+offset_right = 932.0
 offset_bottom = 32.0
 theme_override_fonts/font = ExtResource("5_hkgxv")
-text = "AI 3"
+text = " AI 3"
 clip_text = true
 
 [node name="aiMoneten2" type="Label" parent="UI/aiPlayer"]
@@ -278,12 +249,12 @@ text = "Bet"
 horizontal_alignment = 2
 
 [node name="aiPlayer3" type="Label" parent="UI/aiPlayer"]
-offset_left = 810.0
+offset_left = 806.0
 offset_top = 228.0
-offset_right = 858.0
+offset_right = 932.0
 offset_bottom = 256.0
 theme_override_fonts/font = ExtResource("5_hkgxv")
-text = "AI 3"
+text = " AI 3"
 clip_text = true
 
 [node name="aiMoneten3" type="Label" parent="UI/aiPlayer"]
