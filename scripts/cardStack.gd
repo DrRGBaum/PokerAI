@@ -120,9 +120,6 @@ func process_que():
 func _process(delta):
 	pass
 
-func wait(seconds: float):
-	await get_tree().create_timer(seconds).timeout
-
 var flip = true
 func _on_button_pressed() -> void:
 	flip = !flip
