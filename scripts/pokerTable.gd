@@ -5,12 +5,13 @@ extends Node2D
 
 var playerHand = []
 var currentPlayer = 0
-var round = 0
+var game = 0 # number of game playing
+var round = 0 # current round of the cards
 var minBet = 100
 
 # table vars
 var pot
-var currentBet
+var currentBet = 0
 
 # player vars
 var betting
@@ -20,39 +21,48 @@ var money = 1000
 var aiMoney = [1000,1000,1000,1000]
 var aiBettings = [0,0,0,0]
 
-func roundProcess():
+func roundProcess(): # TODO get done
+	var a = currentPlayer - 1
+	while(a <= 3):
+		$UI/aiPlayer.aiDecision(a)
+		$UI/aiPlayer.displayTurn(a + 2)
+		await wait(2)
+		a += 1
+		pass
 	# turn of each AI and next turn
 	pass
 
 func blinds():
 	# mindest einsatz setzen für die blinds
-	if round == 0:
+	if game == 0: # small
 		betting = minBet * 0.5
 	else:
-		var a = round - 1
+		var a = game - 1
 		aiBettings[a] = minBet * 0.5
 	
-	round += 1
-	if round == 5: round = 0
+	game += 1
+	if game == 5: game = 0
 	
-	if round == 0:
+	if game == 0: # big
 		betting = minBet * 0.5
 	else:
-		var a = round - 1
+		var a = game - 1
 		aiBettings[a] = minBet * 0.5
+	currentPlayer = game + 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var cardStack = $cardStack
-	# cardStack.shuffelCards()
-	# cardStack.display()
+	
 	cardStack.deal()
+	
 	$UI/aiPlayer.displayTurn(currentPlayer)
 	
-	# $UI/aiPlayer.displayBig(1)
 	$UI/aiPlayer.displaySmall(round)
 	
 	blinds()
+	
+	roundProcess()
 	pass # Replace with function body.
 
 
@@ -63,8 +73,6 @@ func _process(delta):
 	
 	currentBet = max(betting,aiBettings[0],aiBettings[1],aiBettings[2],aiBettings[3]) # might not work on whole array
 	$UI/tableLabels.currentBet = currentBet
-
-	wait(1)
 	pass
 
 

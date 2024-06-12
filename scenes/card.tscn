@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://okvdo5etcrma"]
 
 [ext_resource type="Texture2D" uid="uid://citrhexvms2yc" path="res://assets/PixelCards.png" id="1_cb2ex"]
-[ext_resource type="Shader" path="res://scenes/cardShine.gdshader" id="2_onmw5"]
+[ext_resource type="Shader" path="res://scripts/cardShine.gdshader" id="2_hoxfq"]
 
 [sub_resource type="GDScript" id="GDScript_f4ry0"]
 script/source = "extends Node2D
@@ -22,13 +22,11 @@ var glow :bool = false
 func visible(pVisible :bool):
 	isVisible = pVisible
 	if pVisible:
-		
 		$PixelPokerTest.region_rect = regionPos
 	else:
-
 		$PixelPokerTest.region_rect = cardBack
 	pass
-	
+
 func setGlow(pGlow :bool):
 	glow = pGlow
 	$glow.visible = pGlow
@@ -36,16 +34,9 @@ func setGlow(pGlow :bool):
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	# numb = value.lstrip(\"scdh_\") to check the number of the card
-	# print(value)
-	print(color, number)
-	
-
 	$PixelPokerTest.region_rect = regionPos
 	
 	queue_redraw()
-	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -65,7 +56,7 @@ seamless_blend_skirt = 0.6
 noise = SubResource("FastNoiseLite_3n2nj")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_80g86"]
-shader = ExtResource("2_onmw5")
+shader = ExtResource("2_hoxfq")
 shader_parameter/center = Vector2(1, 1)
 shader_parameter/size = 1.0
 shader_parameter/squishness = Vector2(1, 1)

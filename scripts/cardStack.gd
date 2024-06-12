@@ -50,11 +50,6 @@ func placeCards():
 		animPos(aiPlayer2[i],Vector2(850 + (i * 40),90),i*0.4 + 0.3)
 		animPos(aiPlayer3[i],Vector2(850 + (i * 40),310),i*0.4 + 0.4)
 		
-		# aiPlayer0[i].set_position(Vector2(70 + (i * 40),310))
-		# aiPlayer1[i].set_position(Vector2(70 + (i * 40),90))
-		# aiPlayer2[i].set_position(Vector2(850 + (i * 40),90))
-		# aiPlayer3[i].set_position(Vector2(850 + (i * 40),310))
-		
 		aiPlayer0[i].visible(false)
 		aiPlayer1[i].visible(false)
 		aiPlayer2[i].visible(false)
@@ -64,7 +59,7 @@ func placeCards():
 		aiPlayer1[i].set_z_index(i)
 		aiPlayer2[i].set_z_index(i)
 		aiPlayer3[i].set_z_index(i)
-	
+		
 	for i in range (42): # restliche karten verstecken
 		stack[10 + i].set_position(Vector2(480,-60))
 	
@@ -92,8 +87,6 @@ func display(): #displays card deck in current order
 		stack[i].set_position(Vector2(20 * i + 40,200))
 		stack[i].set_z_index(i)
 		queue_redraw()
-	
-	pass
 
 # Called when the node enters the scene tree for the first time.
 func _ready(): # erstellt einen kartenstapel mit den kartenobjekten
@@ -110,11 +103,6 @@ func _ready(): # erstellt einen kartenstapel mit den kartenobjekten
 				3: instance.color = "d"
 			stack.append(instance)
 			add_child(instance)
-
-func process_que():
-	if animationQue.size() > 0:
-		var animation = animationQue[0]
-		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
