@@ -42,6 +42,7 @@ offset_bottom = 378.0
 text = "Visibility test"
 
 [node name="nextRound" type="Button" parent="."]
+visible = false
 offset_left = 597.0
 offset_top = 319.0
 offset_right = 744.0
@@ -158,6 +159,7 @@ offset_top = 500.0
 offset_right = 125.0
 offset_bottom = 540.0
 theme = ExtResource("3_ynihg")
+step = 10.0
 rounded = true
 allow_greater = true
 allow_lesser = true

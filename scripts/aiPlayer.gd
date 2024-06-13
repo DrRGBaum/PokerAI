@@ -6,6 +6,7 @@ var aiMoney = [1000, 1000, 1000, 1000]
 var aiBettings = [0, 0, 0, 0]
 var currentBet = 0
 var standardMoney = 1000
+var aiFolded = [false,false,false,false]
 
 @onready var aiMoneten = [$aiMoneten0, $aiMoneten1, $aiMoneten2, $aiMoneten3]
 @onready var aiBet = [$bet0, $bet1, $bet2, $bet3]

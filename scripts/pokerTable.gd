@@ -19,6 +19,7 @@ var currentBet = 0
 @onready var labels = $UI/tableLabels
 var betting
 var money = 1000
+var folded = false
 
 # ai vars
 @onready var aiPlayer = $UI/aiPlayer
@@ -27,7 +28,7 @@ var aiBettings = [0, 0, 0, 0]
 
 signal button_clicked
 
-func roundProcess(): # TODO get done
+func roundProcess(): # TODO implement folding
 	while true:
 		aiPlayer.displayTurn(currentPlayer)
 		if currentPlayer == 0 + smallBlind:
@@ -72,6 +73,7 @@ func _ready():
 	aiPlayer.displaySmall(gameRound)
 	
 	blinds()
+	labels.setPlayerBet(betting)
 	
 	roundProcess()
 	pass # Replace with function body.
@@ -79,14 +81,13 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	# constantly update the variables in the classes in which they get displayed
-	labels.betting = betting
 	labels.money = money
 	
 	if max(betting, aiBettings[0], aiBettings[1], aiBettings[2], aiBettings[3]) > currentBet:
 		setCurrentBet(max(betting, aiBettings[0], aiBettings[1], aiBettings[2], aiBettings[3]))
 	
-	labels.currentBet = currentBet
 	labels.tablePot = pot
+	labels.currentBet = currentBet
 
 	aiPlayer.aiMoney = aiMoney
 	aiPlayer.currentBet = currentBet
@@ -104,11 +105,15 @@ func next_round() -> void:
 
 func setCurrentBet(pBet):
 	currentBet = pBet
+	labels.setCurrentBet(pBet)
 
 func wait(seconds: float):
 	await get_tree().create_timer(seconds).timeout
 
-func _on_raise_pressed() -> void:
+# TODO consequenzes from buttons
+func _on_raise_pressed() -> void: 
+	betting = labels.betting
+	labels.setPlayerBet(betting)
 	button_clicked.emit()
 	pass # Replace with function body.
 
