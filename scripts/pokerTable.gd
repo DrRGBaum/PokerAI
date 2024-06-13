@@ -14,18 +14,20 @@ var pot
 var currentBet = 0
 
 # player vars
+@onready var labels = $UI/tableLabels
 var betting
 var money = 1000
 
 # ai vars
-var aiMoney = [1000,1000,1000,1000]
-var aiBettings = [0,0,0,0]
+@onready var aiPlayer = $UI/aiPlayer
+var aiMoney = [1000, 1000, 1000, 1000]
+var aiBettings = [0, 0, 0, 0]
 
 func roundProcess(): # TODO get done
 	var a = currentPlayer - 1
-	while(a <= 3):
+	while (a <= 3):
 		$UI/aiPlayer.aiDecision(a)
-		$UI/aiPlayer.displayTurn(a + 2)
+		$UI/aiPlayer.displayTurn(a + 1)
 		await wait(2)
 		a += 1
 		pass
@@ -65,16 +67,20 @@ func _ready():
 	roundProcess()
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	$UI/tableLabels.betting = betting
-	$UI/tableLabels.money = money
+	# constantly update the variables in the classes in which they get displayed
+	labels.betting = betting
+	labels.money = money
 	
-	currentBet = max(betting,aiBettings[0],aiBettings[1],aiBettings[2],aiBettings[3]) # might not work on whole array
-	$UI/tableLabels.currentBet = currentBet
-	pass
+	currentBet = max(betting, aiBettings[0], aiBettings[1], aiBettings[2], aiBettings[3]) # might not work on whole array
+	labels.currentBet = currentBet
+	labels.tablePot = pot
 
+	aiPlayer.aiMoney = aiMoney
+	aiPlayer.currentBet = currentBet
+	aiPlayer.aiBettings = aiBettings
+	pass
 
 func _on_next_round_pressed() -> void:
 	var cardStack = $cardStack
@@ -82,7 +88,7 @@ func _on_next_round_pressed() -> void:
 		0: cardStack.firstRound(); round += 1
 		1: cardStack.nextRound(round); round += 1
 		2: cardStack.nextRound(round); round += 1
-		3: pass #logic for after round
+		3: pass # logic for after round
 	pass # Replace with function body.
 
 func wait(seconds: float):
@@ -91,10 +97,8 @@ func wait(seconds: float):
 func _on_raise_pressed() -> void:
 	pass # Replace with function body.
 
-
 func _on_call_pressed() -> void:
 	pass # Replace with function body.
-
 
 func _on_fold_pressed() -> void:
 	pass # Replace with function body.
