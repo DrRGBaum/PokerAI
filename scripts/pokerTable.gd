@@ -6,11 +6,13 @@ extends Node2D
 var playerHand = []
 var currentPlayer = 0
 var game = 0 # number of game playing
-var round = 0 # current round of the cards
+var gameRound = 0 # current gameRound of the cards
+var smallBlind = 0
 var minBet = 100
 
+var players = []
 # table vars
-var pot
+var pot = 0
 var currentBet = 0
 
 # player vars
@@ -23,34 +25,43 @@ var money = 1000
 var aiMoney = [1000, 1000, 1000, 1000]
 var aiBettings = [0, 0, 0, 0]
 
+signal button_clicked
+
 func roundProcess(): # TODO get done
-	var a = currentPlayer - 1
-	while (a <= 3):
-		$UI/aiPlayer.aiDecision(a)
-		$UI/aiPlayer.displayTurn(a + 1)
-		await wait(2)
-		a += 1
-		pass
-	# turn of each AI and next turn
-	pass
+	while true:
+		aiPlayer.displayTurn(currentPlayer)
+		if currentPlayer == 0 + smallBlind:
+			await button_clicked
+		else: # ai turn
+			await wait(2.5)
+			aiPlayer.aiDecision(currentPlayer - 1)
+		
+		currentPlayer += 1
+		if currentPlayer == 5: currentPlayer = 0
+
+		if currentPlayer == smallBlind:
+			next_round()
+			await wait(2.5)
 
 func blinds():
 	# mindest einsatz setzen für die blinds
-	if game == 0: # small
+	if smallBlind == 0: # small
 		betting = minBet * 0.5
 	else:
-		var a = game - 1
+		var a = smallBlind - 1
 		aiBettings[a] = minBet * 0.5
 	
-	game += 1
-	if game == 5: game = 0
+	var bigBLind = smallBlind + 1
+	if bigBLind == 5: bigBLind = 0
 	
-	if game == 0: # big
-		betting = minBet * 0.5
+	if bigBLind == 0: # big
+		betting = minBet
 	else:
-		var a = game - 1
-		aiBettings[a] = minBet * 0.5
-	currentPlayer = game + 1
+		var a = bigBLind - 1
+		aiBettings[a] = minBet
+	currentPlayer = smallBlind + 2
+	if currentPlayer == 5: currentPlayer = 0
+	if currentPlayer == 5: currentPlayer = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -58,9 +69,7 @@ func _ready():
 	
 	cardStack.deal()
 	
-	$UI/aiPlayer.displayTurn(currentPlayer)
-	
-	$UI/aiPlayer.displaySmall(round)
+	aiPlayer.displaySmall(gameRound)
 	
 	blinds()
 	
@@ -73,7 +82,9 @@ func _process(delta):
 	labels.betting = betting
 	labels.money = money
 	
-	currentBet = max(betting, aiBettings[0], aiBettings[1], aiBettings[2], aiBettings[3]) # might not work on whole array
+	if max(betting, aiBettings[0], aiBettings[1], aiBettings[2], aiBettings[3]) > currentBet:
+		setCurrentBet(max(betting, aiBettings[0], aiBettings[1], aiBettings[2], aiBettings[3]))
+	
 	labels.currentBet = currentBet
 	labels.tablePot = pot
 
@@ -82,23 +93,29 @@ func _process(delta):
 	aiPlayer.aiBettings = aiBettings
 	pass
 
-func _on_next_round_pressed() -> void:
+func next_round() -> void:
 	var cardStack = $cardStack
-	match round:
-		0: cardStack.firstRound(); round += 1
-		1: cardStack.nextRound(round); round += 1
-		2: cardStack.nextRound(round); round += 1
-		3: pass # logic for after round
+	match gameRound:
+		0: cardStack.firstRound(); gameRound += 1
+		1: cardStack.nextRound(gameRound); gameRound += 1
+		2: cardStack.nextRound(gameRound); gameRound += 1
+		3: pass # logic for after gameRound
 	pass # Replace with function body.
+
+func setCurrentBet(pBet):
+	currentBet = pBet
 
 func wait(seconds: float):
 	await get_tree().create_timer(seconds).timeout
 
 func _on_raise_pressed() -> void:
+	button_clicked.emit()
 	pass # Replace with function body.
 
 func _on_call_pressed() -> void:
+	button_clicked.emit()
 	pass # Replace with function body.
 
 func _on_fold_pressed() -> void:
+	button_clicked.emit()
 	pass # Replace with function body.

@@ -254,7 +254,7 @@ offset_top = 228.0
 offset_right = 932.0
 offset_bottom = 256.0
 theme_override_fonts/font = ExtResource("5_hkgxv")
-text = " AI 3"
+text = " AI 4"
 clip_text = true
 
 [node name="aiMoneten3" type="Label" parent="UI/aiPlayer"]
