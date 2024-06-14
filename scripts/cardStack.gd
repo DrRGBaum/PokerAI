@@ -24,6 +24,17 @@ var handPos = [Vector2(621,470),Vector2(706,470)]
 
 var animationQue = []
 
+func hideCards(player :int):
+	var makeInvis
+	match player:
+		0: makeInvis = playerHand
+		1: makeInvis = aiPlayer0
+		2: makeInvis = aiPlayer1
+		3: makeInvis = aiPlayer2
+		4: makeInvis = aiPlayer3
+	makeInvis[0].visible = false
+	makeInvis[1].visible = false
+
 func firstRound():
 	for i in range(3):
 		# stack[10 + i].set_position(tablePos[i])

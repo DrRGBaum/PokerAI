@@ -6,6 +6,12 @@ var money: int
 var currentBet = 0
 var betting = 0
 var tablePot = 0
+var canRaise = true
+
+@onready var raiseButton = $"../buttons/raise"
+@onready var callButton = $"../buttons/call"
+@onready var foldButton = $"../buttons/fold"
+@onready var slider = $"../buttons/slider"
 
 @onready var info = $info
 @onready var moneten = $moneten
@@ -13,6 +19,18 @@ var tablePot = 0
 @onready var pot = $pot
 
 @onready var sliderLabel = $sliderText
+
+func enableButtons():
+	raiseButton.disabled = !canRaise
+	callButton.disabled = false
+	foldButton.disabled = false
+	slider.editable = true
+
+func disableButtons():
+	raiseButton.disabled = true
+	callButton.disabled = true
+	foldButton.disabled = true
+	slider.editable = false
 
 func setInfo(pInfo: String):
 	info.set_text(pInfo)

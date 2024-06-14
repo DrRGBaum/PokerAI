@@ -2,7 +2,7 @@ extends Node2D
 
 # hier läuft die game logic
 # also rundenablauf usw
-
+@onready var cardStack = $cardStack
 var playerHand = []
 var currentPlayer = 0
 var game = 0 # number of game playing
@@ -10,7 +10,10 @@ var gameRound = 0 # current gameRound of the cards
 var smallBlind = 0
 var minBet = 100
 
-var players = []
+var raised = 0
+var canRaise = true
+var isPlaying = [true,true,true,true,true]
+var allBets = []
 # table vars
 var pot = 0
 var currentBet = 0
@@ -31,18 +34,37 @@ signal button_clicked
 func roundProcess(): # TODO implement folding
 	while true:
 		aiPlayer.displayTurn(currentPlayer)
-		if currentPlayer == 0 + smallBlind:
+		countBets()
+		if currentPlayer == 0 + smallBlind and isPlaying[0]:
+			labels.enableButtons()
 			await button_clicked
-		else: # ai turn
+			labels.disableButtons()
+		elif isPlaying[currentPlayer]: # ai turn
 			await wait(2.5)
 			aiPlayer.aiDecision(currentPlayer - 1)
 		
 		currentPlayer += 1
 		if currentPlayer == 5: currentPlayer = 0
 
-		if currentPlayer == smallBlind:
+		var minBet = allBets.min()
+		if currentPlayer == smallBlind and minBet == currentBet:
 			next_round()
+			raised = 0
+			canRaise = true
 			await wait(2.5)
+
+func folds(player :int):
+	isPlaying[player] = false
+	cardStack.hideCards(player)
+	countBets()
+
+func countBets():
+	allBets.clear()
+	if isPlaying[0]: allBets.append(betting)
+	
+	for i in range(3):
+		if isPlaying[i+1]:
+			allBets.append(aiBettings[i])
 
 func blinds():
 	# mindest einsatz setzen für die blinds
@@ -66,7 +88,9 @@ func blinds():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	var cardStack = $cardStack
+	labels.disableButtons()
+	
+	allBets = [betting, aiBettings[0], aiBettings[1], aiBettings[2], aiBettings[3]]
 	
 	cardStack.deal()
 	
@@ -88,10 +112,12 @@ func _process(delta):
 	
 	labels.tablePot = pot
 	labels.currentBet = currentBet
+	labels.canRaise = canRaise
 
-	aiPlayer.aiMoney = aiMoney
+	# aiPlayer.aiMoney = aiMoney
 	aiPlayer.currentBet = currentBet
 	aiPlayer.aiBettings = aiBettings
+	aiPlayer.canRaise = canRaise
 	pass
 
 func next_round() -> void:
@@ -104,6 +130,8 @@ func next_round() -> void:
 	pass # Replace with function body.
 
 func setCurrentBet(pBet):
+	raised += 1
+	if raised > 2 : canRaise = false
 	currentBet = pBet
 	labels.setCurrentBet(pBet)
 
@@ -113,14 +141,18 @@ func wait(seconds: float):
 # TODO consequenzes from buttons
 func _on_raise_pressed() -> void: 
 	betting = labels.betting
+	money -= betting
 	labels.setPlayerBet(betting)
 	button_clicked.emit()
 	pass # Replace with function body.
 
 func _on_call_pressed() -> void:
+	money -= currentBet
+	betting = currentBet
 	button_clicked.emit()
 	pass # Replace with function body.
 
 func _on_fold_pressed() -> void:
+	folds(0)
 	button_clicked.emit()
 	pass # Replace with function body.

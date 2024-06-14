@@ -7,6 +7,7 @@ var aiBettings = [0, 0, 0, 0]
 var currentBet = 0
 var standardMoney = 1000
 var aiFolded = [false,false,false,false]
+var canRaise = true
 
 @onready var aiMoneten = [$aiMoneten0, $aiMoneten1, $aiMoneten2, $aiMoneten3]
 @onready var aiBet = [$bet0, $bet1, $bet2, $bet3]
@@ -28,13 +29,17 @@ func aiDecision(pAI: int):
 		#aiFold(pAI)
 
 func aiRaise(pAI: int):
-	aiBettings[pAI] = $'../..'.currentBet + standardMoney * 0.1
+	if canRaise:
+		aiMoney[pAI] -= currentBet + standardMoney * 0.1
+		aiBettings[pAI] = $'../..'.currentBet + standardMoney * 0.1
+	else: aiCall
 
 func aiCall(pAI: int):
+	aiMoney[pAI] -= currentBet
 	aiBettings[pAI] = $'../..'.currentBet
 # 
 func aiFold(pAI: int):
-	# fold ig
+	$"../..".folds(pAI + 1)
 	pass
 
 func _ready() -> void: # sets the variables when node is created
