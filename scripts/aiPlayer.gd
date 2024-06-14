@@ -16,6 +16,9 @@ var canRaise = true
 @onready var playerName = $'../tableLabels/playerName'
 
 func aiDecision(pAI: int):
+	aiCall(pAI)
+	return
+
 	var rand = RandomNumberGenerator.new()
 	match rand.randi_range(0, 2):
 		0: aiRaise(pAI)

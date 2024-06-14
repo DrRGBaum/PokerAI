@@ -285,4 +285,5 @@ anchor_mode = 0
 [connection signal="pressed" from="UI/buttons/raise" to="." method="_on_raise_pressed"]
 [connection signal="pressed" from="UI/buttons/call" to="." method="_on_call_pressed"]
 [connection signal="pressed" from="UI/buttons/fold" to="." method="_on_fold_pressed"]
+[connection signal="changed" from="UI/buttons/slider" to="UI/tableLabels" method="_on_slider_changed"]
 [connection signal="value_changed" from="UI/buttons/slider" to="UI/tableLabels" method="_on_slider_value_changed"]

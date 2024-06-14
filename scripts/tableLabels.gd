@@ -7,6 +7,8 @@ var currentBet = 0
 var betting = 0
 var tablePot = 0
 var canRaise = true
+var minSlider = 0
+var sliderValue = 50
 
 @onready var raiseButton = $"../buttons/raise"
 @onready var callButton = $"../buttons/call"
@@ -39,9 +41,11 @@ func setMoney(pValue: int):
 	moneten.set_text("$ " + str(pValue))
 
 func setPlayerBet(pValue: int):
+	betting = pValue
 	bet.set_text("Current bet: \n$ " + str(currentBet) + "\n" + "Your bet: \n$" + str(pValue))
 
 func setCurrentBet(pValue: int):
+	currentBet = pValue
 	bet.set_text("Current bet: \n$ " + str(pValue) + "\n" + "Your bet: \n$" + str(betting))
 
 func setPot(pValue: int):
@@ -60,10 +64,12 @@ func _process(delta: float) -> void:
 	setMoney(money)
 	setPot(tablePot)
 	
-	$'../buttons/slider'.set_max($'.'.money)
-	pass
+	slider.set_max(money)
+	slider.set_min(minSlider)
 
 func _on_slider_value_changed(value: float) -> void:
-	betting = value
+	sliderValue = value
 	sliderLabel.set_text("$ " + str(value))
-	pass # Replace with function body.
+
+func _on_slider_changed() -> void:
+	sliderLabel.set_text("$ " + str(betting))

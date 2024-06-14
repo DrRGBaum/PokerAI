@@ -12,7 +12,8 @@ var minBet = 100
 
 var raised = 0
 var canRaise = true
-var isPlaying = [true,true,true,true,true]
+var justRaised = false
+var isPlaying = [true, true, true, true, true]
 var allBets = []
 # table vars
 var pot = 0
@@ -31,42 +32,52 @@ var aiBettings = [0, 0, 0, 0]
 
 signal button_clicked
 
+func turn(): # turn logic for one round
+	aiPlayer.displayTurn(currentPlayer)
+	justRaised = false
+	if currentPlayer == 0 + smallBlind and isPlaying[0]:
+		labels.enableButtons()
+		await button_clicked
+		labels.disableButtons()
+	elif isPlaying[currentPlayer]: # ai turn
+		await wait(1)
+		aiPlayer.aiDecision(currentPlayer - 1)
+
 func roundProcess(): # TODO implement folding
 	while true:
-		aiPlayer.displayTurn(currentPlayer)
+		await turn() # normal turns
+		nextPlayer()
 		countBets()
-		if currentPlayer == 0 + smallBlind and isPlaying[0]:
-			labels.enableButtons()
-			await button_clicked
-			labels.disableButtons()
-		elif isPlaying[currentPlayer]: # ai turn
-			await wait(2.5)
-			aiPlayer.aiDecision(currentPlayer - 1)
-		
-		currentPlayer += 1
-		if currentPlayer == 5: currentPlayer = 0
 
-		var minBet = allBets.min()
-		if currentPlayer == smallBlind and minBet == currentBet:
-			next_round()
-			raised = 0
-			canRaise = true
-			await wait(2.5)
+		if gameRound == 0 and currentPlayer == smallBlind:
+			await turn() # first round through small last bet or call
+			if !justRaised: await next_round()
+			else: nextPlayer()
+		elif currentPlayer == smallBlind and allBets.min() == currentBet and !justRaised:
+			await next_round()
 
-func folds(player :int):
+func lastPlayer():
+	currentPlayer -= 1
+	if currentPlayer == - 1: currentPlayer = 4
+
+func nextPlayer():
+	currentPlayer += 1
+	if currentPlayer == 5: currentPlayer = 0
+
+func folds(player: int):
 	isPlaying[player] = false
 	cardStack.hideCards(player)
 	countBets()
 
-func countBets():
+func countBets(): # to get easier min and highest bet
 	allBets.clear()
-	if isPlaying[0]: allBets.append(betting)
+	if isPlaying[0]:allBets.append(betting)
 	
 	for i in range(3):
-		if isPlaying[i+1]:
+		if isPlaying[i + 1]:
 			allBets.append(aiBettings[i])
 
-func blinds(): # TODO betting issue in first round
+func blinds():
 	# mindest einsatz setzen für die blinds
 	if smallBlind == 0: # small
 		betting = minBet * 0.5
@@ -94,7 +105,7 @@ func blinds(): # TODO betting issue in first round
 func _ready():
 	labels.disableButtons()
 	
-	allBets = [betting, aiBettings[0], aiBettings[1], aiBettings[2], aiBettings[3]]
+	allBets = [betting, aiBettings[0],aiBettings[1],aiBettings[2],aiBettings[3]]
 	
 	cardStack.deal()
 	
@@ -115,8 +126,9 @@ func _process(delta):
 		setCurrentBet(max(betting, aiBettings[0], aiBettings[1], aiBettings[2], aiBettings[3]))
 	
 	labels.tablePot = pot
-	labels.currentBet = currentBet
 	labels.canRaise = canRaise
+	labels.money = money
+	labels.minSlider = betting
 
 	aiPlayer.aiMoney = aiMoney
 	aiPlayer.currentBet = currentBet
@@ -131,11 +143,15 @@ func next_round() -> void:
 		1: cardStack.nextRound(gameRound); gameRound += 1
 		2: cardStack.nextRound(gameRound); gameRound += 1
 		3: pass # logic for after gameRound
-	pass # Replace with function body.
+	
+	raised = 0
+	canRaise = true
+	await wait(2.5)
 
 func setCurrentBet(pBet):
+	justRaised = true
 	raised += 1
-	if raised > 2 : canRaise = false
+	if raised > 2: canRaise = false
 	currentBet = pBet
 	labels.setCurrentBet(pBet)
 
@@ -143,19 +159,17 @@ func wait(seconds: float):
 	await get_tree().create_timer(seconds).timeout
 
 # TODO consequenzes from buttons
-func _on_raise_pressed() -> void: 
-	betting = labels.betting
-	money -= betting
+func _on_raise_pressed() -> void:
+	betting += labels.sliderValue
+	labels.setPlayerBet(betting)
+	money -= labels.sliderValue
 	button_clicked.emit()
-	pass # Replace with function body.
 
 func _on_call_pressed() -> void:
 	money -= currentBet
 	betting = currentBet
 	button_clicked.emit()
-	pass # Replace with function body.
 
 func _on_fold_pressed() -> void:
 	folds(0)
 	button_clicked.emit()
-	pass # Replace with function body.
