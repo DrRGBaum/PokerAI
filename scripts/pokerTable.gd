@@ -66,22 +66,26 @@ func countBets():
 		if isPlaying[i+1]:
 			allBets.append(aiBettings[i])
 
-func blinds():
+func blinds(): # TODO betting issue in first round
 	# mindest einsatz setzen für die blinds
 	if smallBlind == 0: # small
 		betting = minBet * 0.5
+		money -= betting
 	else:
 		var a = smallBlind - 1
 		aiBettings[a] = minBet * 0.5
+		aiMoney[a] -= minBet * 0.5
 	
 	var bigBLind = smallBlind + 1
 	if bigBLind == 5: bigBLind = 0
 	
 	if bigBLind == 0: # big
 		betting = minBet
+		money -= betting
 	else:
 		var a = bigBLind - 1
 		aiBettings[a] = minBet
+		aiMoney[a] -= minBet
 	currentPlayer = smallBlind + 2
 	if currentPlayer == 5: currentPlayer = 0
 	if currentPlayer == 5: currentPlayer = 1
@@ -114,7 +118,7 @@ func _process(delta):
 	labels.currentBet = currentBet
 	labels.canRaise = canRaise
 
-	# aiPlayer.aiMoney = aiMoney
+	aiPlayer.aiMoney = aiMoney
 	aiPlayer.currentBet = currentBet
 	aiPlayer.aiBettings = aiBettings
 	aiPlayer.canRaise = canRaise
@@ -142,7 +146,6 @@ func wait(seconds: float):
 func _on_raise_pressed() -> void: 
 	betting = labels.betting
 	money -= betting
-	labels.setPlayerBet(betting)
 	button_clicked.emit()
 	pass # Replace with function body.
 
