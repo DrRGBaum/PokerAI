@@ -6,7 +6,7 @@ var aiMoney = [1000, 1000, 1000, 1000]
 var aiBettings = [0, 0, 0, 0]
 var currentBet = 0
 var standardMoney = 1000
-var aiFolded = [false,false,false,false]
+var aiFolded = [false, false, false, false]
 var canRaise = true
 
 @onready var table = $'../..'
@@ -16,14 +16,12 @@ var canRaise = true
 @onready var playerName = $'../tableLabels/playerName'
 
 func aiDecision(pAI: int):
-	aiCall(pAI)
-	return
-
 	var rand = RandomNumberGenerator.new()
 	match rand.randi_range(0, 2):
 		0: aiRaise(pAI)
 		1: aiCall(pAI)
 		2: aiFold(pAI)
+		
 	#decides what the ai will do, pAI is the current it decides for
 	#if aiMoney[pAI] > standardMoney * 0.75:
 		#aiRaise(pAI)

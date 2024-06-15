@@ -38,23 +38,24 @@ func turn(): # turn logic for one round
 	if currentPlayer == 0 + smallBlind and isPlaying[0]:
 		labels.enableButtons()
 		await button_clicked
+		labels.setPlayerBet(betting)
 		labels.disableButtons()
 	elif isPlaying[currentPlayer]: # ai turn
-		await wait(1)
+		await wait(2.5)
 		aiPlayer.aiDecision(currentPlayer - 1)
+	countBets()
 
-func roundProcess(): # TODO implement folding
+func roundProcess():
 	while true:
 		await turn() # normal turns
 		nextPlayer()
-		countBets()
 
 		if gameRound == 0 and currentPlayer == smallBlind:
-			await turn() # first round through small last bet or call
-			if !justRaised: await next_round()
+			await turn() # first round, small last bet or call
+			if allBets.min() == currentBet: await next_round()
 			else: nextPlayer()
-		elif currentPlayer == smallBlind and allBets.min() == currentBet and !justRaised:
-			await next_round()
+		elif currentPlayer == smallBlind and allBets.min() == currentBet:
+			await next_round() # next round if all players have same bet
 
 func lastPlayer():
 	currentPlayer -= 1
@@ -138,6 +139,18 @@ func _process(delta):
 
 func next_round() -> void:
 	var cardStack = $cardStack
+
+	# reset bettings
+	pot = betting + aiBettings[0] + aiBettings[1] + aiBettings[2] + aiBettings[3]
+	betting = 0
+
+	for i in range(aiBettings.size()):
+		aiBettings[i] = 0
+		aiPlayer.aiBettings[i] = 0
+
+	labels.setPlayerBet(betting)
+	setCurrentBet(0)
+
 	match gameRound:
 		0: cardStack.firstRound(); gameRound += 1
 		1: cardStack.nextRound(gameRound); gameRound += 1
@@ -158,16 +171,14 @@ func setCurrentBet(pBet):
 func wait(seconds: float):
 	await get_tree().create_timer(seconds).timeout
 
-# TODO consequenzes from buttons
 func _on_raise_pressed() -> void:
 	betting += labels.sliderValue
-	labels.setPlayerBet(betting)
 	money -= labels.sliderValue
 	button_clicked.emit()
 
 func _on_call_pressed() -> void:
-	money -= currentBet
 	betting = currentBet
+	money -= currentBet
 	button_clicked.emit()
 
 func _on_fold_pressed() -> void:
