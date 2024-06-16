@@ -41,13 +41,14 @@ func setMoney(pValue: int):
 	moneten.set_text("$ " + str(pValue))
 
 func setPlayerBet(pValue: int):
+
 	betting = pValue
 	bet.set_text("Current bet: \n$ " + str(currentBet) + "\n" + "Your bet: \n$" + str(pValue))
 
 func setCurrentBet(pValue: int):
 	currentBet = pValue
 	bet.set_text("Current bet: \n$ " + str(pValue) + "\n" + "Your bet: \n$" + str(betting))
-
+	
 func setPot(pValue: int):
 	pot.set_text("$ " + str(pValue))
 
@@ -63,7 +64,7 @@ func _process(delta: float) -> void:
 	setInfo(infoText)
 	setMoney(money)
 	setPot(tablePot)
-	
+
 	slider.set_max(money)
 	slider.set_min(minSlider)
 
@@ -72,4 +73,6 @@ func _on_slider_value_changed(value: float) -> void:
 	sliderLabel.set_text("$ " + str(value))
 
 func _on_slider_changed() -> void:
-	sliderLabel.set_text("$ " + str(betting))
+	sliderValue = minSlider
+	slider.value = minSlider
+	sliderLabel.set_text("$ " + str(minSlider))

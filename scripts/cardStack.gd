@@ -4,27 +4,40 @@ extends Node2D
 # var tableCards = array cards pos left to right
 # shuffel() function to randomize the order of the cards
 
-var cardScene = preload("res://scenes/card.tscn")
+var cardScene = preload ("res://scenes/card.tscn")
+@onready var win = $'../PokerTableV0_5'
 
 var stack = []
 var table = []
-var hide = Vector2(480,-60)
+var hide = Vector2(480, -60)
 
 var playerHand = []
 var aiPlayer0 = [] # lowkey ineffizient
 var aiPlayer1 = [] # problem für später tbh
 var aiPlayer2 = []
 var aiPlayer3 = []
+var pruefe = []
 
 # hintergrund pixelgröße: 480, 270
 # karten größe 40, 60
 # alle pixelgrößen mal 2 da zwei facher faktor
-var tablePos = [Vector2(300,200),Vector2(390,200),Vector2(480,200),Vector2(570,200),Vector2(660,200)]
-var handPos = [Vector2(621,470),Vector2(706,470)]
+var tablePos = [Vector2(300, 200), Vector2(390, 200), Vector2(480, 200), Vector2(570, 200), Vector2(660, 200)]
+var handPos = [Vector2(621, 470), Vector2(706, 470)]
 
 var animationQue = []
 
-func hideCards(player :int):
+func markCards():
+	pruefe.append(stack[0])
+	pruefe.append(stack[1])
+	var leuchten
+	
+	# leuchten = win.check(pruefe)
+	
+	for i in range(2):
+		pass
+		# leuchten[i].setGlow(true)
+
+func hideCards(player: int):
 	var makeInvis
 	match player:
 		0: makeInvis = playerHand
@@ -38,12 +51,12 @@ func hideCards(player :int):
 func firstRound():
 	for i in range(3):
 		# stack[10 + i].set_position(tablePos[i])
-		animPos(stack[10 + i],tablePos[i],i * 0.1)
+		animPos(stack[10 + i], tablePos[i], i * 0.1)
 		table.append(stack[10 + i])
 	pass
 
-func nextRound(round :int):
-	animPos(stack[12 + round],tablePos[2 + round],0)
+func nextRound(round: int):
+	animPos(stack[12 + round], tablePos[2 + round], 0)
 	# var tween = get_tree().create_tween()
 	# tween.tween_property(stack[12 + round],"position",tablePos[2 + round], 0.3).set_trans(Tween.TRANS_QUINT)
 	# stack[12 + round].set_position(tablePos[2 + round])
@@ -52,39 +65,40 @@ func nextRound(round :int):
 
 func placeCards():
 	for i in range(2):
-		animPos(playerHand[i],handPos[i],i * 0.9)
+		animPos(playerHand[i], handPos[i], i * 0.9)
 		
-		playerHand[i].setGlow(true)
+		animPos(aiPlayer0[i], Vector2(70 + (i * 40), 310), i * 0.4 + 0.1)
+		animPos(aiPlayer1[i], Vector2(70 + (i * 40), 90), i * 0.4 + 0.2)
+		animPos(aiPlayer2[i], Vector2(850 + (i * 40), 90), i * 0.4 + 0.3)
+		animPos(aiPlayer3[i], Vector2(850 + (i * 40), 310), i * 0.4 + 0.4)
 		
-		animPos(aiPlayer0[i],Vector2(70 + (i * 40),310),i*0.4 + 0.1)
-		animPos(aiPlayer1[i],Vector2(70 + (i * 40),90),i*0.4 + 0.2)
-		animPos(aiPlayer2[i],Vector2(850 + (i * 40),90),i*0.4 + 0.3)
-		animPos(aiPlayer3[i],Vector2(850 + (i * 40),310),i*0.4 + 0.4)
-		
-		aiPlayer0[i].visible(false)
-		aiPlayer1[i].visible(false)
-		aiPlayer2[i].visible(false)
-		aiPlayer3[i].visible(false)
+		toggleCards(false)
 		
 		aiPlayer0[i].set_z_index(i)
 		aiPlayer1[i].set_z_index(i)
 		aiPlayer2[i].set_z_index(i)
 		aiPlayer3[i].set_z_index(i)
 		
-	for i in range (42): # restliche karten verstecken
-		stack[10 + i].set_position(Vector2(480,-60))
+	for i in range(42): # restliche karten verstecken
+		stack[10 + i].set_position(Vector2(480, -60))
 	
 	queue_redraw()
-	pass
 
-func deal(): #karten austeilen, legit altmodisch wie irl karten austeilen
+func toggleCards(see: bool):
+	for i in range(2):
+		aiPlayer0[i].visible(see)
+		aiPlayer1[i].visible(see)
+		aiPlayer2[i].visible(see)
+		aiPlayer3[i].visible(see)
+
+func deal(): # karten austeilen, legit altmodisch wie irl karten austeilen
 	shuffelCards()
-	playerHand = [stack[0], stack[1]]
+	playerHand = [stack[0],stack[1]]
 	
-	aiPlayer0 = [stack[2], stack[3]]
-	aiPlayer1 = [stack[4], stack[5]]
-	aiPlayer2 = [stack[6], stack[7]]
-	aiPlayer3 = [stack[8], stack[9]]
+	aiPlayer0 = [stack[2],stack[3]]
+	aiPlayer1 = [stack[4],stack[5]]
+	aiPlayer2 = [stack[6],stack[7]]
+	aiPlayer3 = [stack[8],stack[9]]
 	placeCards()
 	pass
 
@@ -93,9 +107,9 @@ func shuffelCards(): # mischt die karten
 	stack.shuffle()
 	pass
 
-func display(): #displays card deck in current order
+func display(): # displays card deck in current order
 	for i in range(52):
-		stack[i].set_position(Vector2(20 * i + 40,200))
+		stack[i].set_position(Vector2(20 * i + 40, 200))
 		stack[i].set_z_index(i)
 		queue_redraw()
 
@@ -104,7 +118,7 @@ func _ready(): # erstellt einen kartenstapel mit den kartenobjekten
 	for i in range(4):
 		for j in range(13):
 			var instance = cardScene.instantiate()
-			instance.regionPos = Rect2(40*j,60*i,40,60)
+			instance.regionPos = Rect2(40 * j, 60 * i, 40, 60)
 			instance.set_position(hide)
 			instance.number = j
 			match i: # spades, hearts, clubs, diamonds
@@ -129,7 +143,6 @@ func _on_button_pressed() -> void:
 		aiPlayer3[i].visible(flip)
 	pass # Replace with function body.
 	
-func animPos(pSprite:Object,pPos:Vector2,pDelay):
+func animPos(pSprite: Object, pPos: Vector2, pDelay):
 	var tween = get_tree().create_tween()
-	tween.tween_property(pSprite,"position",pPos, 0.25).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT).set_delay(pDelay)
-	
+	tween.tween_property(pSprite, "position", pPos, 0.25).set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT).set_delay(pDelay)

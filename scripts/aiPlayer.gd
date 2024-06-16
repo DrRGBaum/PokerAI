@@ -16,6 +16,9 @@ var canRaise = true
 @onready var playerName = $'../tableLabels/playerName'
 
 func aiDecision(pAI: int):
+	aiCall(pAI)
+	return
+
 	var rand = RandomNumberGenerator.new()
 	match rand.randi_range(0, 2):
 		0: aiRaise(pAI)
@@ -34,12 +37,12 @@ func aiRaise(pAI: int):
 	if canRaise:
 		table.aiMoney[pAI] -= currentBet + standardMoney * 0.1
 		table.aiBettings[pAI] = table.currentBet + standardMoney * 0.1
-	else: aiCall
+	else: aiCall(pAI)
 
 func aiCall(pAI: int):
 	table.aiMoney[pAI] -= currentBet
 	table.aiBettings[pAI] = table.currentBet
-# 
+
 func aiFold(pAI: int):
 	table.folds(pAI + 1)
 	pass
@@ -48,7 +51,6 @@ func _ready() -> void: # sets the variables when node is created
 	pass
 
 func displayTurn(pPlayer: int): # turns the outline of the current player black
-	
 	playerName.add_theme_constant_override('outline_size', 0)
 	for i in range(4):
 		aiName[i].add_theme_constant_override('outline_size', 0)

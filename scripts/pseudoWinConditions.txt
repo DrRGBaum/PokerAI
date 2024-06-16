@@ -52,7 +52,7 @@ funktion straight(pkarten)
 			count++
 			wenn count == 4
 				gewinnkombination = "straight"
-				gewinnkarten = pkarten[i-3, i-2, i-1, i, i+2]
+				gewinnkarten = pkarten[i-3, i-2, i-1, i, i+1]
 
 funktion flush(pkarten) // TODO
 	n = pkarten.länge
@@ -61,7 +61,7 @@ funktion flush(pkarten) // TODO
 		wenn pkarten.farbe[i]  == pkarten.farbe[i + 1]
 			count++
 			wenn count == 4
-				gewinnkombination = "straight"
+				gewinnkombination = "flush"
 				gewinnkarten = pkarten[i-3, i-2, i-1, i, i+2]
 
 funktion fullHouse(pkarten, loop)

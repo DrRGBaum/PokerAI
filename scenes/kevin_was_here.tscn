@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://mwkit2xcnixu"]
+[gd_scene load_steps=14 format=3 uid="uid://mwkit2xcnixu"]
 
 [ext_resource type="Script" path="res://scripts/pokerTable.gd" id="1_isv6e"]
 [ext_resource type="Script" path="res://scripts/cardStack.gd" id="2_bowx6"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://d251v8pw8erbe" path="res://assets/Button.png" id="3_f0dch"]
 [ext_resource type="Script" path="res://scripts/tableLabels.gd" id="3_vg1m3"]
 [ext_resource type="Theme" uid="uid://bpcv3ukjdvheb" path="res://assets/RedButton.tres" id="3_ynihg"]
+[ext_resource type="Script" path="res://scripts/winCombinations.gd" id="4_oao3k"]
 [ext_resource type="FontFile" uid="uid://blbau786a0lwj" path="res://assets/Minecraftia-Regular.ttf" id="5_hkgxv"]
 [ext_resource type="Script" path="res://scripts/aiPlayer.gd" id="6_k2n7h"]
 
@@ -32,6 +33,7 @@ script = ExtResource("2_bowx6")
 position = Vector2(480, 270)
 scale = Vector2(2, 2)
 texture = ExtResource("2_d4wik")
+script = ExtResource("4_oao3k")
 
 [node name="visibility" type="Button" parent="."]
 visible = false

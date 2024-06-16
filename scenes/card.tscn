@@ -1,47 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://okvdo5etcrma"]
 
+[ext_resource type="Script" path="res://scripts/card.gd" id="1_14hsp"]
 [ext_resource type="Texture2D" uid="uid://citrhexvms2yc" path="res://assets/PixelCards.png" id="1_cb2ex"]
 [ext_resource type="Shader" path="res://scripts/cardShine.gdshader" id="2_hoxfq"]
-
-[sub_resource type="GDScript" id="GDScript_f4ry0"]
-script/source = "extends Node2D
-
-var cardScene = preload(\"res://scenes/card.tscn\")
-
-var color = '' #bsp s für spades
-var number :int
-
-# Rect2(40,60,40,60)
-var regionPos = Rect2(560,0,40,60)
-var cardBack = Rect2(520,180,40,60)
-var isVisible :bool = true
-var glow :bool = false
-
-#TODO value handler
-
-func visible(pVisible :bool):
-	isVisible = pVisible
-	if pVisible:
-		$PixelPokerTest.region_rect = regionPos
-	else:
-		$PixelPokerTest.region_rect = cardBack
-	pass
-
-func setGlow(pGlow :bool):
-	glow = pGlow
-	$glow.visible = pGlow
-	pass
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	$PixelPokerTest.region_rect = regionPos
-	
-	queue_redraw()
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lel7d"]
 
@@ -78,7 +39,7 @@ shader_parameter/noise_texture = SubResource("NoiseTexture2D_2siqf")
 
 [node name="card" type="Node2D"]
 position = Vector2(40, 60)
-script = SubResource("GDScript_f4ry0")
+script = ExtResource("1_14hsp")
 
 [node name="PixelPokerTest" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_lel7d")

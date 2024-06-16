@@ -41,12 +41,14 @@ func turn(): # turn logic for one round
 		labels.setPlayerBet(betting)
 		labels.disableButtons()
 	elif isPlaying[currentPlayer]: # ai turn
-		await wait(2.5)
+		await wait(1)
 		aiPlayer.aiDecision(currentPlayer - 1)
+		await wait(0.5)
 	countBets()
 
 func roundProcess():
 	while true:
+		cardStack.markCards()
 		await turn() # normal turns
 		nextPlayer()
 
@@ -115,6 +117,7 @@ func _ready():
 	blinds()
 	labels.setPlayerBet(betting)
 	
+	countBets()
 	roundProcess()
 	pass # Replace with function body.
 
@@ -129,8 +132,7 @@ func _process(delta):
 	labels.tablePot = pot
 	labels.canRaise = canRaise
 	labels.money = money
-	labels.minSlider = betting
-
+	labels.minSlider = allBets.max()
 	aiPlayer.aiMoney = aiMoney
 	aiPlayer.currentBet = currentBet
 	aiPlayer.aiBettings = aiBettings
@@ -138,24 +140,25 @@ func _process(delta):
 	pass
 
 func next_round() -> void:
-	var cardStack = $cardStack
-
 	# reset bettings
-	pot = betting + aiBettings[0] + aiBettings[1] + aiBettings[2] + aiBettings[3]
+	pot += betting + aiBettings[0] + aiBettings[1] + aiBettings[2] + aiBettings[3]
+	
 	betting = 0
 
-	for i in range(aiBettings.size()):
+	for i in range(4):
 		aiBettings[i] = 0
-		aiPlayer.aiBettings[i] = 0
 
 	labels.setPlayerBet(betting)
 	setCurrentBet(0)
+	countBets()
 
 	match gameRound:
 		0: cardStack.firstRound(); gameRound += 1
 		1: cardStack.nextRound(gameRound); gameRound += 1
 		2: cardStack.nextRound(gameRound); gameRound += 1
-		3: pass # logic for after gameRound
+		3:
+			cardStack.toggleCards(true)
+			pass # turn cards, see who wins, give pot to winner
 	
 	raised = 0
 	canRaise = true
