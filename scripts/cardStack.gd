@@ -27,15 +27,13 @@ var handPos = [Vector2(621, 470), Vector2(706, 470)]
 var animationQue = []
 
 func markCards():
-	pruefe.append(stack[0])
-	pruefe.append(stack[1])
+	pruefe = playerHand + table
 	var leuchten
 	
-	# leuchten = win.check(pruefe)
+	leuchten = win.check(pruefe)
 	
-	for i in range(2):
-		pass
-		# leuchten[i].setGlow(true)
+	for i in range(leuchten.size()):
+		leuchten[i].setGlow(true)
 
 func hideCards(player: int):
 	var makeInvis

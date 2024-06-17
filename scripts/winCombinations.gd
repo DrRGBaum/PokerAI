@@ -1,14 +1,15 @@
 extends Node2D
 
 var gewinnkombination = ""
-@onready var gewinnkarten = []
+@onready var gewinnkarten :Array[Node2D] = []
 var isStraight = false
 var isFlush = false
 var isStraightFlush = false
 
-func check(pKarten): # checks the given cards for the highest combination
+func check(pKarten:Array): # checks the given cards for the highest combination
+	gewinnkarten.clear()
 	pKarten = sort(pKarten)
-	gewinnkarten = highCard(pKarten)
+	gewinnkarten.append(highCard(pKarten))
 	onePair(pKarten)
 	if pKarten.size() > 3:
 		twoPairs(pKarten, false)
@@ -28,20 +29,20 @@ func getWinCondition():
 	return gewinnkombination
 
 func highCard(pKarten):
-	gewinnkarten.clear()
+	# gewinnkarten.clear()
 	gewinnkombination = "Highcard"
-	gewinnkarten.append(pKarten[1]) # hope this is right
+	return pKarten[pKarten.size() - 1] # hope this is right
 
 func onePair(pKarten):
-	for i in range(pKarten.size() - 2):
-		for j in range(i + 1, pKarten.size() - 1):
+	for i in range(pKarten.size() - 1):
+		for j in range(i + 1, pKarten.size()):
 			if pKarten[i].number == pKarten[j].number:
 				gewinnkombination = "One Pair"
 				gewinnkarten.clear()
 				gewinnkarten.append(pKarten[i])
 				gewinnkarten.append(pKarten[j])
 
-func twoPairs(pKarten: Array, loop: bool):
+func twoPairs(pKarten, loop: bool):
 	for i in range(pKarten.size() - 2):
 		for j in range(i + 1, pKarten.size() - 1):
 			if pKarten[i].number == pKarten[j].number and loop:
@@ -55,7 +56,7 @@ func twoPairs(pKarten: Array, loop: bool):
 				pKarten.remove_at(j)
 				twoPairs(pKarten, true)
 
-func threeOfAKind(pKarten: Array):
+func threeOfAKind(pKarten):
 	for i in range(pKarten.size() - 3):
 		for j in range(i + 1, pKarten.size() - 2):
 			for k in range(j + 1, pKarten.size() - 1):
@@ -63,17 +64,17 @@ func threeOfAKind(pKarten: Array):
 					gewinnkombination = "Three of a kind"
 					gewinnkarten = [pKarten[i],pKarten[j],pKarten[k]]
 
-func straight(pKarten: Array):
+func straight(pKarten):
 	pKarten = sort(pKarten)
 	var count = 0
-	for i in range(pKarten.size()):
+	for i in range(pKarten.size() - 1):
 		if pKarten[i].number + 1 == pKarten[i + 1].number:
 			count += 1
 			if count == 4:
 				gewinnkombination = "Straight"
 				gewinnkarten = [pKarten[i - 3],pKarten[i - 2],pKarten[i - 1],pKarten[i],pKarten[i + 1]]
 
-func flush(pKarten: Array):
+func flush(pKarten):
 	pKarten = sortColor(pKarten)
 	var count = 0
 	for i in range(pKarten.size() - 2):
@@ -83,7 +84,7 @@ func flush(pKarten: Array):
 				gewinnkombination = "Flush"
 				gewinnkarten = [pKarten[i - 3],pKarten[i - 2],pKarten[i - 1],pKarten[i],pKarten[i + 1]]
 
-func fullHouse(pKarten: Array):
+func fullHouse(pKarten):
 	var triple = false
 	for i in range(pKarten.size() - 3):
 		for j in range(i + 1, pKarten.size() - 2):
@@ -99,20 +100,20 @@ func fullHouse(pKarten: Array):
 				gewinnkarten.append(pKarten[i])
 				gewinnkarten.append(pKarten[j])
 
-func fourOfAKind(pKarten: Array):
+func fourOfAKind(pKarten):
 	for i in range(pKarten.size() - 4):
 		if pKarten[i].number == pKarten[i + 1].number and pKarten[i].number == pKarten[i + 2].number and pKarten[i].number == pKarten[i + 3].number and pKarten[i].number == pKarten[i + 4].number:
 			gewinnkombination = "four of a kind"
 			for j in range(i, i + 4):
 				gewinnkarten.append(pKarten[j]) # could be wrong here,hopes and prayers
 
-func straightFlush(pKarten: Array):
+func straightFlush(pKarten):
 	if isStraight and isFlush:
 		straight(pKarten) # to get gewinnkarten
 		isStraightFlush = true
 		gewinnkombination = "Straight Flush"
 
-func royalFlush(pKarten: Array):
+func royalFlush(pKarten):
 	if isStraightFlush:
 		var count = 0
 		pKarten = sort(pKarten)
@@ -125,7 +126,7 @@ func royalFlush(pKarten: Array):
 			for i in range(pKarten.size()):
 				gewinnkarten.append(pKarten[pKarten.size() - i])
 
-func sortColor(pKarten: Array): # idk if works with letters, just try
+func sortColor(pKarten): # idk if works with letters, just try
 	for i in range(pKarten.size() - 1):
 		for j in range(pKarten.size() - i - 2):
 			if pKarten[j].color > pKarten[j + 1].color:
@@ -134,9 +135,9 @@ func sortColor(pKarten: Array): # idk if works with letters, just try
 				pKarten[j + 1] = s
 	return pKarten
 
-func sort(pKarten: Array): # sorts cards by number
+func sort(pKarten): # sorts cards by number
 	for i in range(pKarten.size() - 1):
-		for j in range(pKarten.size() - i - 2):
+		for j in range(pKarten.size() - i - 1):
 			if pKarten[j].number > pKarten[j + 1].number:
 				var s = pKarten[j]
 				pKarten[j] = pKarten[j + 1]
