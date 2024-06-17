@@ -48,10 +48,10 @@ func turn(): # turn logic for one round
 
 func roundProcess():
 	while true:
-		cardStack.markCards()
 		await turn() # normal turns
 		nextPlayer()
-
+		cardStack.markCards()
+		
 		if gameRound == 0 and currentPlayer == smallBlind:
 			await turn() # first round, small last bet or call
 			if allBets.min() == currentBet: await next_round()
@@ -160,6 +160,8 @@ func next_round() -> void:
 			cardStack.toggleCards(true)
 			pass # turn cards, see who wins, give pot to winner
 	
+	cardStack.markCards()
+
 	raised = 0
 	canRaise = true
 	await wait(2.5)

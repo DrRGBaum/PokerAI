@@ -28,6 +28,10 @@ var animationQue = []
 
 func markCards():
 	pruefe = playerHand + table
+
+	for i in range(pruefe.size()):
+		pruefe[i].setGlow(false)
+
 	var leuchten
 	
 	leuchten = win.check(pruefe)

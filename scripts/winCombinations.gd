@@ -1,12 +1,12 @@
 extends Node2D
 
 var gewinnkombination = ""
-@onready var gewinnkarten :Array[Node2D] = []
+@onready var gewinnkarten: Array[Node2D] = []
 var isStraight = false
 var isFlush = false
 var isStraightFlush = false
 
-func check(pKarten:Array): # checks the given cards for the highest combination
+func check(pKarten: Array): # checks the given cards for the highest combination
 	gewinnkarten.clear()
 	pKarten = sort(pKarten)
 	gewinnkarten.append(highCard(pKarten))
@@ -42,8 +42,8 @@ func onePair(pKarten):
 				gewinnkarten.append(pKarten[i])
 				gewinnkarten.append(pKarten[j])
 
-func twoPairs(pKarten, loop: bool):
-	for i in range(pKarten.size() - 2):
+func twoPairs(pKarten, loop: bool): # TODO fix array index error
+	for i in range(pKarten.size() - 1):
 		for j in range(i + 1, pKarten.size() - 1):
 			if pKarten[i].number == pKarten[j].number and loop:
 				gewinnkombination = "Two Pair"
