@@ -41,9 +41,9 @@ func turn(): # turn logic for one round
 		labels.setPlayerBet(betting)
 		labels.disableButtons()
 	elif isPlaying[currentPlayer]: # ai turn
-		await wait(1)
-		aiPlayer.aiDecision(currentPlayer - 1)
 		await wait(0.5)
+		aiPlayer.aiDecision(currentPlayer - 1)
+		await wait(0.25)
 	countBets()
 
 func roundProcess():
@@ -111,6 +111,8 @@ func _ready():
 	allBets = [betting, aiBettings[0],aiBettings[1],aiBettings[2],aiBettings[3]]
 	
 	cardStack.deal()
+	
+	cardStack.markCards()
 	
 	aiPlayer.displaySmall(gameRound)
 	

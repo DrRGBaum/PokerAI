@@ -12,7 +12,6 @@ func check(pKarten: Array): # checks the given cards for the highest combination
 	gewinnkarten.append(highCard(pKarten))
 	onePair(pKarten)
 	if pKarten.size() > 3:
-		twoPairs(pKarten, false)
 		threeOfAKind(pKarten)
 		straight(pKarten)
 		flush(pKarten)
@@ -41,20 +40,16 @@ func onePair(pKarten):
 				gewinnkarten.clear()
 				gewinnkarten.append(pKarten[i])
 				gewinnkarten.append(pKarten[j])
-
-func twoPairs(pKarten, loop: bool): # TODO fix array index error
+	
+	if pKarten.size() < 3: return
+	print(pKarten.size())
+		
 	for i in range(pKarten.size() - 1):
 		for j in range(i + 1, pKarten.size() - 1):
-			if pKarten[i].number == pKarten[j].number and loop:
-				gewinnkombination = "Two Pair"
+			if pKarten[i].number == pKarten[j].number:
+				gewinnkombination = "Two pairs"
 				gewinnkarten.append(pKarten[i])
 				gewinnkarten.append(pKarten[j])
-			elif pKarten[i].number == pKarten[j].number:
-				gewinnkarten.append(pKarten[i])
-				gewinnkarten.append(pKarten[j])
-				pKarten.remove_at(i)
-				pKarten.remove_at(j)
-				twoPairs(pKarten, true)
 
 func threeOfAKind(pKarten):
 	for i in range(pKarten.size() - 3):
@@ -78,7 +73,7 @@ func flush(pKarten):
 	pKarten = sortColor(pKarten)
 	var count = 0
 	for i in range(pKarten.size() - 2):
-		if pKarten[i] == pKarten[i + 1]:
+		if pKarten[i].color == pKarten[i + 1].color:
 			count += 1
 			if count == 4:
 				gewinnkombination = "Flush"
