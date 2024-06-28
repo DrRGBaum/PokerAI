@@ -22,6 +22,7 @@ func check(pKarten: Array): # checks the given cards for the highest combination
 		straightFlush(pKarten)
 		straightFlush(pKarten)
 		royalFlush(pKarten)
+	print(gewinnkombination)
 	return gewinnkarten
 
 func getWinCondition():
@@ -33,18 +34,20 @@ func highCard(pKarten):
 	return pKarten[pKarten.size() - 1] # hope this is right
 
 func onePair(pKarten):
-	for i in range(pKarten.size() - 1):
-		for j in range(i + 1, pKarten.size()):
+	for i in range(pKarten.size() - 2):
+		for j in range(i + 1, pKarten.size() - 1):
 			if pKarten[i].number == pKarten[j].number:
 				gewinnkombination = "One Pair"
 				gewinnkarten.clear()
 				gewinnkarten.append(pKarten[i])
 				gewinnkarten.append(pKarten[j])
+
+				pKarten.remove_at(i)
+				pKarten.remove_at(j)
 	
 	if pKarten.size() < 3: return
-	print(pKarten.size())
 		
-	for i in range(pKarten.size() - 1):
+	for i in range(pKarten.size() - 2):
 		for j in range(i + 1, pKarten.size() - 1):
 			if pKarten[i].number == pKarten[j].number:
 				gewinnkombination = "Two pairs"

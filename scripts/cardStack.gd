@@ -55,7 +55,6 @@ func firstRound():
 		# stack[10 + i].set_position(tablePos[i])
 		animPos(stack[10 + i], tablePos[i], i * 0.1)
 		table.append(stack[10 + i])
-	pass
 
 func nextRound(round: int):
 	animPos(stack[12 + round], tablePos[2 + round], 0)
@@ -63,7 +62,6 @@ func nextRound(round: int):
 	# tween.tween_property(stack[12 + round],"position",tablePos[2 + round], 0.3).set_trans(Tween.TRANS_QUINT)
 	# stack[12 + round].set_position(tablePos[2 + round])
 	table.append(stack[12 + round])
-	pass
 
 func placeCards():
 	for i in range(2):

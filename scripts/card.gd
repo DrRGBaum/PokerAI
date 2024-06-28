@@ -19,12 +19,10 @@ func visible(pVisible: bool):
 		$PixelPokerTest.region_rect = regionPos
 	else:
 		$PixelPokerTest.region_rect = cardBack
-	pass
 
 func setGlow(pGlow: bool):
 	glow = pGlow
 	$glow.visible = pGlow
-	pass
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
