@@ -14,7 +14,7 @@ func check(pKarten: Array): # checks the given cards for the highest combination
 	if pKarten.size() > 2:
 		threeOfAKind(pKarten)
 		straight(pKarten)
-		flush(pKarten)
+		# flush(pKarten)
 		fullHouse(pKarten)
 		fullHouse(pKarten)
 		fullHouse(pKarten)
@@ -35,7 +35,7 @@ func highCard(pKarten):
 
 func onePair(pKarten):
 	for i in range(pKarten.size() - 2):
-		for j in range(i + 1, pKarten.size() - 1):
+		for j in range(i + 1, pKarten.size()):
 			if pKarten[i].number == pKarten[j].number:
 				gewinnkombination = "One Pair"
 				gewinnkarten.clear()
@@ -43,7 +43,7 @@ func onePair(pKarten):
 				gewinnkarten.append(pKarten[j])
 
 				pKarten.remove_at(i)
-				pKarten.remove_at(j)
+				pKarten.remove_at(j) # TODO: need to update array length
 	
 	if pKarten.size() < 3: return
 		
@@ -72,15 +72,15 @@ func straight(pKarten):
 				gewinnkombination = "Straight"
 				gewinnkarten = [pKarten[i - 3],pKarten[i - 2],pKarten[i - 1],pKarten[i],pKarten[i + 1]]
 
-func flush(pKarten):
-	pKarten = sortColor(pKarten)
-	var count = 0
-	for i in range(pKarten.size() - 2):
-		if pKarten[i].color == pKarten[i + 1].color:
-			count += 1
-			if count == 4:
-				gewinnkombination = "Flush"
-				gewinnkarten = [pKarten[i - 3],pKarten[i - 2],pKarten[i - 1],pKarten[i],pKarten[i + 1]]
+#func flush(pKarten): funktioniert nicht
+	#pKarten = sortColor(pKarten)
+	#var count = 0
+	#for i in range(pKarten.size() - 2):
+		#if pKarten[i].color == pKarten[i + 1].color:
+			#count += 1
+			#if count == 4:
+				#gewinnkombination = "Flush"
+				#gewinnkarten = [pKarten[i - 3],pKarten[i - 2],pKarten[i - 1],pKarten[i],pKarten[i + 1]]
 
 func fullHouse(pKarten):
 	var triple = false

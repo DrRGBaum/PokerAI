@@ -1,0 +1,291 @@
+[gd_scene load_steps=14 format=3 uid="uid://mwkit2xcnixu"]
+
+[ext_resource type="Script" path="res://scripts/pokerTable.gd" id="1_isv6e"]
+[ext_resource type="Script" path="res://scripts/cardStack.gd" id="2_bowx6"]
+[ext_resource type="Texture2D" uid="uid://wvvyk55beoe8" path="res://assets/pokerTableV0.9.png" id="2_d4wik"]
+[ext_resource type="Texture2D" uid="uid://d251v8pw8erbe" path="res://assets/Button.png" id="3_f0dch"]
+[ext_resource type="Script" path="res://scripts/tableLabels.gd" id="3_vg1m3"]
+[ext_resource type="Theme" uid="uid://bpcv3ukjdvheb" path="res://assets/RedButton.tres" id="3_ynihg"]
+[ext_resource type="Script" path="res://scripts/winCombinations.gd" id="4_oao3k"]
+[ext_resource type="FontFile" uid="uid://blbau786a0lwj" path="res://assets/Minecraftia-Regular.ttf" id="5_hkgxv"]
+[ext_resource type="Script" path="res://scripts/aiPlayer.gd" id="6_k2n7h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_agofi"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xyd3j"]
+texture = ExtResource("3_f0dch")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_42sht"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ve2ny"]
+texture = ExtResource("3_f0dch")
+
+[node name="pokerTable" type="Node2D"]
+script = ExtResource("1_isv6e")
+metadata/_edit_horizontal_guides_ = [256.0, 150.0, 32.0, 370.0]
+metadata/_edit_vertical_guides_ = [150.0, 810.0]
+
+[node name="cardStack" type="Node2D" parent="."]
+z_index = 1
+script = ExtResource("2_bowx6")
+
+[node name="PokerTableV0_5" type="Sprite2D" parent="."]
+position = Vector2(480, 270)
+scale = Vector2(2, 2)
+texture = ExtResource("2_d4wik")
+script = ExtResource("4_oao3k")
+
+[node name="visibility" type="Button" parent="."]
+visible = false
+offset_left = 301.0
+offset_top = 344.0
+offset_right = 448.0
+offset_bottom = 378.0
+text = "Visibility test"
+
+[node name="nextRound" type="Button" parent="."]
+visible = false
+offset_left = 597.0
+offset_top = 319.0
+offset_right = 744.0
+offset_bottom = 353.0
+text = "Next round"
+clip_text = true
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="tableLabels" type="Node2D" parent="UI"]
+script = ExtResource("3_vg1m3")
+
+[node name="info" type="Label" parent="UI/tableLabels"]
+visible = false
+offset_left = 309.0
+offset_top = 16.0
+offset_right = 649.0
+offset_bottom = 75.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "Its $name turn!"
+horizontal_alignment = 1
+clip_text = true
+
+[node name="moneten" type="Label" parent="UI/tableLabels"]
+offset_left = 826.0
+offset_top = 440.0
+offset_right = 948.0
+offset_bottom = 468.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "$ Moneten"
+
+[node name="bet" type="Label" parent="UI/tableLabels"]
+offset_left = 410.0
+offset_top = 410.0
+offset_right = 550.0
+offset_bottom = 534.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "Current Bet:
+$3
+Your Bet:
+$ 0"
+
+[node name="pot" type="Label" parent="UI/tableLabels"]
+offset_left = 351.0
+offset_top = 90.0
+offset_right = 609.0
+offset_bottom = 118.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "Pot: $Moneten"
+horizontal_alignment = 1
+
+[node name="sliderText" type="Label" parent="UI/tableLabels"]
+z_index = 5
+offset_left = 20.0
+offset_top = 509.0
+offset_right = 120.0
+offset_bottom = 537.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+theme_override_font_sizes/font_size = 16
+text = "$ 0"
+horizontal_alignment = 1
+
+[node name="playerName" type="Label" parent="UI/tableLabels"]
+offset_left = 363.0
+offset_top = 365.0
+offset_right = 597.0
+offset_bottom = 388.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "$playerName"
+horizontal_alignment = 1
+
+[node name="buttons" type="Node2D" parent="UI"]
+
+[node name="raise" type="Button" parent="UI/buttons"]
+offset_left = 20.0
+offset_top = 420.0
+offset_right = 120.0
+offset_bottom = 500.0
+theme = ExtResource("3_ynihg")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "RAISE"
+icon_alignment = 1
+expand_icon = true
+
+[node name="call" type="Button" parent="UI/buttons"]
+offset_left = 150.0
+offset_top = 420.0
+offset_right = 250.0
+offset_bottom = 500.0
+theme = ExtResource("3_ynihg")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_agofi")
+theme_override_styles/normal = SubResource("StyleBoxTexture_xyd3j")
+text = "CALL"
+icon_alignment = 1
+expand_icon = true
+
+[node name="fold" type="Button" parent="UI/buttons"]
+offset_left = 280.0
+offset_top = 420.0
+offset_right = 380.0
+offset_bottom = 500.0
+theme = ExtResource("3_ynihg")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_42sht")
+theme_override_styles/normal = SubResource("StyleBoxTexture_ve2ny")
+text = "FOLD"
+icon_alignment = 1
+expand_icon = true
+
+[node name="slider" type="HSlider" parent="UI/buttons"]
+offset_left = 16.0
+offset_top = 500.0
+offset_right = 125.0
+offset_bottom = 540.0
+theme = ExtResource("3_ynihg")
+step = 10.0
+rounded = true
+allow_greater = true
+allow_lesser = true
+
+[node name="aiPlayer" type="Node2D" parent="UI"]
+script = ExtResource("6_k2n7h")
+
+[node name="aiPlayer0" type="Label" parent="UI/aiPlayer"]
+offset_left = 20.0
+offset_top = 228.0
+offset_right = 150.0
+offset_bottom = 256.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "AI 1"
+horizontal_alignment = 2
+clip_text = true
+
+[node name="aiMoneten0" type="Label" parent="UI/aiPlayer"]
+offset_left = 28.0
+offset_top = 370.0
+offset_right = 150.0
+offset_bottom = 398.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "$ Moneten"
+horizontal_alignment = 2
+clip_text = true
+
+[node name="bet0" type="Label" parent="UI/aiPlayer"]
+offset_left = 153.0
+offset_top = 282.0
+offset_right = 283.0
+offset_bottom = 310.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "Bet"
+
+[node name="aiPlayer1" type="Label" parent="UI/aiPlayer"]
+offset_left = 28.0
+offset_top = 4.0
+offset_right = 150.0
+offset_bottom = 32.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "AI 2"
+horizontal_alignment = 2
+clip_text = true
+
+[node name="aiMoneten1" type="Label" parent="UI/aiPlayer"]
+offset_left = 28.0
+offset_top = 150.0
+offset_right = 150.0
+offset_bottom = 178.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "$ Moneten"
+horizontal_alignment = 2
+clip_text = true
+
+[node name="bet1" type="Label" parent="UI/aiPlayer"]
+offset_left = 153.0
+offset_top = 90.0
+offset_right = 283.0
+offset_bottom = 118.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "Bet"
+
+[node name="aiPlayer2" type="Label" parent="UI/aiPlayer"]
+offset_left = 806.0
+offset_top = 4.0
+offset_right = 932.0
+offset_bottom = 32.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = " AI 3"
+clip_text = true
+
+[node name="aiMoneten2" type="Label" parent="UI/aiPlayer"]
+offset_left = 810.0
+offset_top = 150.0
+offset_right = 932.0
+offset_bottom = 178.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "$ Moneten"
+clip_text = true
+
+[node name="bet2" type="Label" parent="UI/aiPlayer"]
+offset_left = 680.0
+offset_top = 90.0
+offset_right = 810.0
+offset_bottom = 118.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "Bet"
+horizontal_alignment = 2
+
+[node name="aiPlayer3" type="Label" parent="UI/aiPlayer"]
+offset_left = 806.0
+offset_top = 228.0
+offset_right = 932.0
+offset_bottom = 256.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = " AI 4"
+clip_text = true
+
+[node name="aiMoneten3" type="Label" parent="UI/aiPlayer"]
+offset_left = 810.0
+offset_top = 370.0
+offset_right = 932.0
+offset_bottom = 398.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "$ Moneten"
+clip_text = true
+
+[node name="bet3" type="Label" parent="UI/aiPlayer"]
+offset_left = 680.0
+offset_top = 282.0
+offset_right = 810.0
+offset_bottom = 310.0
+theme_override_fonts/font = ExtResource("5_hkgxv")
+text = "Bet"
+horizontal_alignment = 2
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[connection signal="pressed" from="visibility" to="cardStack" method="_on_button_pressed"]
+[connection signal="pressed" from="nextRound" to="." method="_on_next_round_pressed"]
+[connection signal="pressed" from="UI/buttons/raise" to="." method="_on_raise_pressed"]
+[connection signal="pressed" from="UI/buttons/call" to="." method="_on_call_pressed"]
+[connection signal="pressed" from="UI/buttons/fold" to="." method="_on_fold_pressed"]
+[connection signal="changed" from="UI/buttons/slider" to="UI/tableLabels" method="_on_slider_changed"]
+[connection signal="value_changed" from="UI/buttons/slider" to="UI/tableLabels" method="_on_slider_value_changed"]
