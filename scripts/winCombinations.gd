@@ -11,7 +11,7 @@ func check(pKarten: Array): # checks the given cards for the highest combination
 	pKarten = sort(pKarten)
 	gewinnkarten.append(highCard(pKarten))
 	onePair(pKarten)
-	if pKarten.size() > 3:
+	if pKarten.size() > 2:
 		threeOfAKind(pKarten)
 		straight(pKarten)
 		flush(pKarten)
@@ -124,14 +124,8 @@ func royalFlush(pKarten):
 			for i in range(pKarten.size()):
 				gewinnkarten.append(pKarten[pKarten.size() - i])
 
-func sortColor(pKarten): # idk if works with letters, just try
-	for i in range(pKarten.size() - 1):
-		for j in range(pKarten.size() - i - 2):
-			if pKarten[j].color > pKarten[j + 1].color:
-				var s = pKarten[j]
-				pKarten[j] = pKarten[j + 1]
-				pKarten[j + 1] = s
-	return pKarten
+func sortColor(pKarten): #
+	return null
 
 func sort(pKarten): # sorts cards by number
 	for i in range(pKarten.size() - 1):
@@ -140,4 +134,10 @@ func sort(pKarten): # sorts cards by number
 				var s = pKarten[j]
 				pKarten[j] = pKarten[j + 1]
 				pKarten[j + 1] = s
+	outputCardNumbers(pKarten)
 	return pKarten
+
+func outputCardNumbers(pKarten):
+	for i in range(pKarten.size()):
+		print(pKarten[i].number)
+	return null

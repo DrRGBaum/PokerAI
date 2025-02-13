@@ -121,11 +121,11 @@ func _ready(): # erstellt einen kartenstapel mit den kartenobjekten
 			instance.regionPos = Rect2(40 * j, 60 * i, 40, 60)
 			instance.set_position(hide)
 			instance.number = j
-			match i: # spades, hearts, clubs, diamonds
-				0: instance.color = "s"
-				1: instance.color = "h"
-				2: instance.color = "c"
-				3: instance.color = "d"
+			match i:
+				0: instance.color = "s" # spades
+				1: instance.color = "h" # hearts
+				2: instance.color = "c" # clubs
+				3: instance.color = "d" # diamonds
 			stack.append(instance)
 			add_child(instance)
 

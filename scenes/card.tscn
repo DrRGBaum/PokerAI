@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://okvdo5etcrma"]
 
 [ext_resource type="Script" path="res://scripts/card.gd" id="1_14hsp"]
-[ext_resource type="Texture2D" uid="uid://citrhexvms2yc" path="res://assets/PixelCards.png" id="1_cb2ex"]
 [ext_resource type="Shader" path="res://scripts/cardShine.gdshader" id="2_hoxfq"]
+[ext_resource type="Texture2D" uid="uid://bsustki1y5k7" path="res://assets/PixelCardsDark.png" id="2_wkuc8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lel7d"]
 
@@ -44,7 +44,7 @@ script = ExtResource("1_14hsp")
 [node name="PixelPokerTest" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_lel7d")
 scale = Vector2(2, 2)
-texture = ExtResource("1_cb2ex")
+texture = ExtResource("2_wkuc8")
 region_enabled = true
 region_rect = Rect2(0, 0, 40, 60)
 

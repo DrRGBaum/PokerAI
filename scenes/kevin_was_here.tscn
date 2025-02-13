@@ -10,15 +10,15 @@
 [ext_resource type="FontFile" uid="uid://blbau786a0lwj" path="res://assets/Minecraftia-Regular.ttf" id="5_hkgxv"]
 [ext_resource type="Script" path="res://scripts/aiPlayer.gd" id="6_k2n7h"]
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_agofi"]
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xyd3j"]
 texture = ExtResource("3_f0dch")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_agofi"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_42sht"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ve2ny"]
 texture = ExtResource("3_f0dch")
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_42sht"]
 
 [node name="pokerTable" type="Node2D"]
 script = ExtResource("1_isv6e")
@@ -136,8 +136,8 @@ offset_right = 250.0
 offset_bottom = 500.0
 theme = ExtResource("3_ynihg")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = SubResource("StyleBoxTexture_xyd3j")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_agofi")
+theme_override_styles/normal = SubResource("StyleBoxTexture_xyd3j")
 text = "CALL"
 icon_alignment = 1
 expand_icon = true
@@ -149,8 +149,8 @@ offset_right = 380.0
 offset_bottom = 500.0
 theme = ExtResource("3_ynihg")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_styles/normal = SubResource("StyleBoxTexture_ve2ny")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_42sht")
+theme_override_styles/normal = SubResource("StyleBoxTexture_ve2ny")
 text = "FOLD"
 icon_alignment = 1
 expand_icon = true
